@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AppGroupIdentifier</key>
+	<string>$(APP_GROUP_ID)</string>
+	<key>CFBundleDisplayName</key>
+	<string>مترجم الألعاب</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>لحفظ الصورة المترجمة في مكتبة الصور.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>لقراءة آخر لقطة شاشة وترجمتها على جهازك.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

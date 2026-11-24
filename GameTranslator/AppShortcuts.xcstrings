@@ -1,0 +1,23 @@
+{
+  "sourceLanguage" : "ar",
+  "strings" : {
+    "Translate latest screenshot with ${applicationName}" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترجم آخر لقطة شاشة باستخدام ${applicationName}"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translate latest screenshot with ${applicationName}"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
