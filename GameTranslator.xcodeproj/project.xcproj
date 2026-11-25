@@ -32,10 +32,42 @@
       "children": [
         { "path": "<PRODUCTS>/GameTranslator.app", "id": "5C9CE04030B642FE00BC5EC5", "type": "wrapper.application", "index": false },
         { "path": "<PRODUCTS>/GameTranslatorTests.xctest", "id": "5C9349B930B64470006CEE91", "type": "wrapper.cfbundle", "index": false },
+        { "path": "<PRODUCTS>/BroadcastExtension.appex", "id": "5C0416E230B6525A0031E718", "type": "wrapper.app-extension", "index": false, "target-membership": [ { "build-phase": "GameTranslator/copy/Embed Foundation Extensions", "header-preservation": "remove-on-copy" } ] },
+        { "path": "<PRODUCTS>/LiveActivityExtension.appex", "id": "5C3750CC30B656A900ED6501", "type": "wrapper.app-extension", "index": false, "target-membership": [ { "build-phase": "GameTranslator/copy/Embed Foundation Extensions", "header-preservation": "remove-on-copy" } ] },
       ],
     },
-    { "kind": "folder", "path": "Shared", "target-membership": [ "GameTranslator" ] },
+    { "kind": "folder", "path": "Shared", "target-membership": [ "BroadcastExtension", "GameTranslator" ] },
     { "kind": "folder", "path": "GameTranslatorTests", "target-membership": [ "GameTranslatorTests" ] },
+    {
+      "kind": "folder",
+      "path": "BroadcastExtension",
+      "target-membership": [
+        "BroadcastExtension",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "BroadcastExtension",
+          "exclusions": [
+            "Info.plist",
+          ],
+        },
+      ],
+    }, {
+      "kind": "folder",
+      "path": "LiveActivityExtension",
+      "target-membership": [
+        "LiveActivityExtension",
+      ],
+      "membership-exceptions": [
+        {
+          "target": "LiveActivityExtension",
+          "exclusions": [
+            "Info.plist",
+          ],
+        },
+      ],
+    },
+    { "kind": "folder", "path": "LiveActivityShared", "target-membership": [ "GameTranslator", "LiveActivityExtension" ] },
   ],
   "targets": [
     {
@@ -43,10 +75,19 @@
       "id": "5C9CE03F30B642FE00BC5EC5",
       "product": "Products/GameTranslator.app",
       "product-type": "application",
+      "dependencies": [
+        "BroadcastExtension",
+        "LiveActivityExtension",
+      ],
       "build-phases": [
         "compile-sources",
         "frameworks",
         "resources",
+        {
+          "kind": "copy",
+          "name": "Embed Foundation Extensions",
+          "bundle-base-path": "plugins-directory",
+        },
       ],
       "build-settings": {
         "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
@@ -60,7 +101,6 @@
         "INFOPLIST_FILE": "GameTranslator/Info.plist",
         "INFOPLIST_KEY_UIApplicationSceneManifest_Generation": "YES",
         "INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents": "YES",
-        "INFOPLIST_KEY_UILaunchScreen_Generation": "YES",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad": "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
         "INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone": "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight",
         "LD_RUNPATH_SEARCH_PATHS": [
@@ -103,6 +143,72 @@
         "SWIFT_VERSION": "6.0",
         "TARGETED_DEVICE_FAMILY": "1,2",
         "TEST_HOST": "$(BUILT_PRODUCTS_DIR)/GameTranslator.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GameTranslator",
+      },
+    }, {
+      "name": "BroadcastExtension",
+      "id": "5C0416E130B6525A0031E718",
+      "product": "Products/BroadcastExtension.appex",
+      "product-type": "app-extension",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "build-settings": {
+        "APPLICATION_EXTENSION_API_ONLY": "YES",
+        "CODE_SIGN_ENTITLEMENTS": "BroadcastExtension/BroadcastExtension.entitlements",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "1",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "BroadcastExtension/Info.plist",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks",
+          "@executable_path/../../Frameworks",
+        ],
+        "MARKETING_VERSION": "1.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.gametranslator.GameTranslator.BroadcastExtension",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SKIP_INSTALL": "YES",
+        "STRING_CATALOG_GENERATE_SYMBOLS": "YES",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "6.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
+      },
+    }, {
+      "name": "LiveActivityExtension",
+      "id": "5C3750CB30B656A900ED6501",
+      "product": "Products/LiveActivityExtension.appex",
+      "product-type": "app-extension",
+      "build-phases": [
+        "compile-sources",
+        "frameworks",
+        "resources",
+      ],
+      "build-settings": {
+        "APPLICATION_EXTENSION_API_ONLY": "YES",
+        "CODE_SIGN_STYLE": "Automatic",
+        "CURRENT_PROJECT_VERSION": "1",
+        "GENERATE_INFOPLIST_FILE": "YES",
+        "INFOPLIST_FILE": "LiveActivityExtension/Info.plist",
+        "LD_RUNPATH_SEARCH_PATHS": [
+          "$(inherited)",
+          "@executable_path/Frameworks",
+          "@executable_path/../../Frameworks",
+        ],
+        "MARKETING_VERSION": "1.0",
+        "PRODUCT_BUNDLE_IDENTIFIER": "com.gametranslator.GameTranslator.LiveActivityExtension",
+        "PRODUCT_NAME": "$(TARGET_NAME)",
+        "SKIP_INSTALL": "YES",
+        "STRING_CATALOG_GENERATE_SYMBOLS": "YES",
+        "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+        "SWIFT_DEFAULT_ACTOR_ISOLATION": "MainActor",
+        "SWIFT_EMIT_LOC_STRINGS": "YES",
+        "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+        "SWIFT_VERSION": "6.0",
+        "TARGETED_DEVICE_FAMILY": "1,2",
       },
     },
   ],

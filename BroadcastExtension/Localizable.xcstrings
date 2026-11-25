@@ -1,0 +1,74 @@
+{
+  "sourceLanguage" : "ar",
+  "strings" : {
+    "error.app_group" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر الوصول إلى مساحة التطبيق المشتركة. أعد تثبيت التطبيق."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app's shared storage is unavailable. Reinstall the app."
+          }
+        }
+      }
+    },
+    "error.language" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوضع المباشر لا يقرأ لغة اللعبة المختارة. غيّرها من إعدادات التطبيق."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live mode cannot read the selected game language. Change it in the app's settings."
+          }
+        }
+      }
+    },
+    "notification.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضغط لقراءة الترجمة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to read the translation."
+          }
+        }
+      }
+    },
+    "notification.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نص جديد من اللعبة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New game text"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

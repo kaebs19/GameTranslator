@@ -6,13 +6,29 @@
 	<string>$(APP_GROUP_ID)</string>
 	<key>CFBundleDisplayName</key>
 	<string>مترجم الألعاب</string>
+	<key>NSCameraUsageDescription</key>
+	<string>لقراءة النص داخل المربع وترجمته على جهازك.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>لحفظ الصورة المترجمة في مكتبة الصور.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>لقراءة آخر لقطة شاشة وترجمتها على جهازك.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
+		<string>screen-capture</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+		<key>UIImageName</key>
+		<string>LaunchLogo</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<false/>
+	</dict>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
 </dict>
 </plist>

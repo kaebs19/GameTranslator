@@ -1,0 +1,23 @@
+{
+  "sourceLanguage" : "ar",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مترجم الألعاب"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Game Translator"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

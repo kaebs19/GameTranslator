@@ -31,11 +31,34 @@ No game files are modified. The app only reads what is visible on screen.
 - `ScreenshotIntents` (App Intents for Shortcuts / Back Tap) — can live in the main app target
 - Shared Swift package or folder `Shared/` for models, OCR service, text-dedupe, App Group helpers
 
+## Architecture (MVVM)
+- `GameTranslator/App`: entry point, `AppRouter`, and `AppDependencies` (the only place that picks concrete services).
+- `GameTranslator/Core`: UI-free services (Translation, Imaging, Photos, Errors).
+- `GameTranslator/DesignSystem`: reusable views. Must not import anything from `Features`.
+- `GameTranslator/Features/<Name>/{Models,ViewModels,Views}`: one folder per screen.
+- `Shared/{Models,OCR,Text,Storage}`: code the broadcast extension also compiles. Mark types `nonisolated`.
+- Views hold no business logic. View models are `@Observable`, receive services as protocols through `init`, and never import SwiftUI.
+- `Shared/Live`: capture-independent live pipeline (`LumaImage` → `FrameFingerprint` → OCR → `TextDeduper` → `LiveChannel`). `BroadcastExtension` only feeds it frames; the app reads it through `LiveFeed`.
+- `LiveActivityShared`: attributes, views and button intents compiled into the app and `LiveActivityExtension`. `LiveActions.handler` is set by `AppDependencies`, so buttons work when iOS launches the app in the background.
+- In the background `TranslationService` uses a headless session (iOS 26+, main app only). Before iOS 26 pending text waits until the app is opened.
+- UI: dark only. Views use `AppPalette` / `Color.app…`, `AppGradient`, `.card()`, `.buttonStyle(.primary/.secondary/.icon)`, never raw colors. `ThemeTests` checks contrast.
+- Tabs: Home (camera + reading box), TV, Connect (guides that open existing features; no console brand names), Settings. Images, live, history and controls open over Home as `HomeSheet`.
+- Interface language (system / Arabic / English) is `InterfaceLanguageModel`, applied with `.interfaceLanguage(_:)` on the root **and inside every sheet**; navigation stacks get `.id(language)` because an existing bar keeps its direction.
+- Camera: `CameraFrameReader` sends `CameraEvent`s. A frozen picture is kept in memory only, and the image shown comes from the same frame that is read. `OverlayPlacement` keeps the translation off the box. `keepScreenOn` is on only while reading.
+- `AppTabBar` replaces the system tab bar; each tab hides the system one.
+- `LineMerger` joins wrapped sentences before translation (images, camera, and up to 3 lines in live). It is careful on purpose: never join menu entries.
+- `Core/Camera` reads only the box on screen; `CameraPreviewView` converts it to sensor coordinates. Frames are never stored.
+- `CloudFallback` runs only after on-device translation failed, the user consented and entered a key. Anything claiming "nothing is uploaded" must follow `usesCloud`.
+- `PrivacyPolicyView` and `Docs/privacy-policy.html` carry the same text. Update the privacy manifests when using a new required-reason API.
+- ReplayKit broadcast is deprecated in iOS 27 (replaced by ScreenCaptureKit) but is the only option on iOS 18–26.
+- `Core/Live/ScreenCapture` is an experimental iOS 27+ source (off by default, device only: the simulator SDK has no ScreenCaptureKit). It needs the `screen-capture` background mode.
+- Translation goes through `TranslationProviding`. `TranslationService` queues work for the single `.translationHost(_:)` at the app root.
+
 ## Conventions
 - UI strings in Arabic first (RTL support), English second. Use String Catalogs.
 - No game names, logos or trademarks in app name, icon, or metadata.
 - No analytics or network calls by default. Everything on-device unless the user enables cloud translation.
-- Privacy: screen content is never stored unless the user saves a translated image.
+- Privacy: images and frames are never stored unless the user saves a translated image. Text and translations are kept on device in the cache and in History (added on request; can be turned off and cleared).
 - Keep functions small, add unit tests for text dedupe and line-merging logic.
 
 ## Build & run

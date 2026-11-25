@@ -1,0 +1,37 @@
+import CoreGraphics
+import Testing
+import UIKit
+@testable import GameTranslator
+
+struct OCRServiceTests {
+    @Test func flipsVisionBoxToTopLeft() {
+        let box = OCRService.topLeftBox(fromVision: CGRect(x: 0.1, y: 0.75, width: 0.5, height: 0.125))
+        #expect(box == CGRect(x: 0.1, y: 0.125, width: 0.5, height: 0.125))
+    }
+
+    @Test func sortsRowsThenColumns() {
+        func line(_ text: String, x: Double, y: Double) -> RecognizedLine {
+            RecognizedLine(text: text, boundingBox: CGRect(x: x, y: y, width: 0.2, height: 0.05))
+        }
+        let sorted = OCRService.sortedInReadingOrder([
+            line("bottom", x: 0.1, y: 0.8), line("right", x: 0.6, y: 0.1), line("left", x: 0.1, y: 0.11)
+        ])
+        #expect(sorted.map(\.text) == ["left", "right", "bottom"])
+    }
+
+    @Test func readsTextAndPlacesItsBox() async throws {
+        let image = try #require(TestImage.make(lines: ["FOLLOW THE CAR", "Press the button"]))
+        let lines = try await OCRService(mode: .accurate).recognizeText(in: image, language: .english)
+        #expect(lines.map { $0.text.lowercased() } == ["follow the car", "press the button"])
+        let first = try #require(lines.first)
+        #expect(first.boundingBox.midY < 0.5)
+    }
+
+    @Test func accurateModeReadsMoreLanguagesThanFast() {
+        let accurate = OCRService(mode: .accurate).readableLanguages
+        let fast = OCRService(mode: .fast).readableLanguages
+        #expect(fast.contains(.english))
+        #expect(accurate.isSuperset(of: fast))
+        #expect(accurate.contains(AppLanguage(code: "ja")))
+    }
+}
