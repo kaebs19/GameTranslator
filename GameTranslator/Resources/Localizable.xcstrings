@@ -3526,13 +3526,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "متوقفة افتراضيًا. إذا فعّلتها، يُرسل النص المقروء من وضع الكاميرا إلى خادم SubGG ليترجمه نموذج لغوي، وتُحفظ الترجمة في كاش مشترك لتُعاد لكل المستخدمين. لا تُرسل الصور، ولا يُربط النص باسمك: يستخدم التطبيق رمز جهاز مجهول. قد يستعين الخادم بمزوّد ذكاء اصطناعي خارجي لترجمة النص."
+            "value" : "متوقفة افتراضيًا. إذا فعّلتها، يُرسل النص المقروء من وضع الكاميرا إلى خادم SubGG ليترجمه نموذج لغوي، وتُحفظ الترجمة في كاش مشترك لتُعاد لكل المستخدمين. وفي وضع اللعب عن بُعد مع التلفزيون، يُرسل نص ترجمة اللعبة المقروء من البث إلى الخادم ليُترجم ويصل إلى تلفزيونك المربوط، ثم لا يُحفظ إلا في الكاش المشترك. لا تُرسل الصور، ولا يُربط النص باسمك: يستخدم التطبيق رمز جهاز مجهول. قد يستعين الخادم بمزوّد ذكاء اصطناعي خارجي لترجمة النص."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Off by default. If you turn it on, text read in camera mode is sent to the SubGG server to be translated by a language model, and the translation is kept in a shared cache reused for all users. Images are never sent and text is not linked to you: the app uses an anonymous device token. The server may use an outside AI provider to translate the text."
+            "value" : "Off by default. If you turn it on, text read in camera mode is sent to the SubGG server to be translated by a language model, and the translation is kept in a shared cache reused for all users. In Remote Play mode with a TV, the game's subtitle text read by the broadcast is sent to the server to be translated and delivered to your linked TV; it is kept only in the shared cache. Images are never sent and text is not linked to you: the app uses an anonymous device token. The server may use an outside AI provider to translate the text."
           }
         }
       }
@@ -3771,6 +3771,890 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This device cannot translate between these languages"
+          }
+        }
+      }
+    },
+    "remote.app_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبّته وسجّل الدخول بحسابك."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install it and sign in with your account."
+          }
+        }
+      }
+    },
+    "remote.app_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر جهازك واضغط اتصال. الجوال والجهاز على شبكة الواي فاي نفسها."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose your console and connect. The phone and console are on the same Wi-Fi."
+          }
+        }
+      }
+    },
+    "remote.app_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تأكد أن صورة اللعبة ظهرت على الجوال، ثم ارجع إلى هنا."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make sure the game picture appears on the phone, then come back here."
+          }
+        }
+      }
+    },
+    "remote.app_done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اتصلت وظهرت اللعبة على الجوال"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected and the game shows on the phone"
+          }
+        }
+      }
+    },
+    "remote.app_open" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح PS Remote Play في App Store"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open PS Remote Play in the App Store"
+          }
+        }
+      }
+    },
+    "remote.app_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التطبيق الرسمي يعرض اللعبة على جوالك، ومنه نقرأ الترجمة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The official app shows the game on your phone, and we read the subtitles from it."
+          }
+        }
+      }
+    },
+    "remote.app_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبّت PS Remote Play واتصل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install PS Remote Play and connect"
+          }
+        }
+      }
+    },
+    "remote.broadcast_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضغط الزر واختر «مترجم الألعاب» ثم «بدء البث»."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap the button, choose “Game Translator”, then “Start Broadcast”."
+          }
+        }
+      }
+    },
+    "remote.broadcast_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يُسجّل شيء ولا يُحفظ: الإطارات تُقرأ ثم تُحذف."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing is recorded or saved: frames are read, then dropped."
+          }
+        }
+      }
+    },
+    "remote.broadcast_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "البث هو ما يسمح بقراءة اللعبة من PS Remote Play."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The broadcast is what lets the app read the game from PS Remote Play."
+          }
+        }
+      }
+    },
+    "remote.broadcast_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدأ بث الشاشة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start the screen broadcast"
+          }
+        }
+      }
+    },
+    "remote.card_start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدأ الإعداد خطوة بخطوة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set up step by step"
+          }
+        }
+      }
+    },
+    "remote.card_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الجوال يستقبل اللعبة عبر اللعب عن بُعد، ويقرأ ترجمتها ويرسلها إلى التلفزيون فوق اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your phone receives the game through Remote Play, reads its subtitles and sends the translation to the TV, over the game."
+          }
+        }
+      }
+    },
+    "remote.card_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العب من البلايستيشن"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play from your console"
+          }
+        }
+      }
+    },
+    "remote.console_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح الإعدادات ← النظام ← اللعب عن بُعد."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings → System → Remote Play."
+          }
+        }
+      }
+    },
+    "remote.console_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعّل «تمكين اللعب عن بُعد»."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on “Enable Remote Play”."
+          }
+        }
+      }
+    },
+    "remote.console_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "من الإعدادات ← النظام ← توفير الطاقة، فعّل «البقاء متصلًا بالإنترنت» و«تمكين تشغيل البلايستيشن من الشبكة» إن أردت التشغيل من الجوال."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Settings → System → Power Saving, turn on “Stay Connected to the Internet” and “Enable Turning On from Network” if you want to wake it from the phone."
+          }
+        }
+      }
+    },
+    "remote.console_4" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعّل الترجمة الإنجليزية (Subtitles) من إعدادات اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on English subtitles in the game's settings."
+          }
+        }
+      }
+    },
+    "remote.console_done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعّلت اللعب عن بُعد"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remote Play is on"
+          }
+        }
+      }
+    },
+    "remote.console_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إن كان على حسابك رمز دخول، فقد يمنع الاتصال. يمكنك إزالته من الإعدادات ← المستخدمون والحسابات ← إعدادات تسجيل الدخول."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A sign-in passcode on your account may block the connection. You can remove it in Settings → Users and Accounts → Login Settings."
+          }
+        }
+      }
+    },
+    "remote.console_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "على البلايستيشن، بالحساب الذي ستلعب به:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the console, with the account you'll play with:"
+          }
+        }
+      }
+    },
+    "remote.console_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعّل اللعب عن بُعد"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn on Remote Play"
+          }
+        }
+      }
+    },
+    "remote.done_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدأ البث من «أجهزتي» أو من مركز التحكم."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start the broadcast from My Devices or Control Center."
+          }
+        }
+      }
+    },
+    "remote.done_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح PS Remote Play والعب."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open PS Remote Play and play."
+          }
+        }
+      }
+    },
+    "remote.done_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كل شيء جاهز. في المرات القادمة يكفي:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All set. Next time, just:"
+          }
+        }
+      }
+    },
+    "remote.pair_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في تطبيق التلفزيون اكتب الأرقام السبعة بالريموت."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In the TV app, type the seven digits with the remote."
+          }
+        }
+      }
+    },
+    "remote.pair_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إن انتهت صلاحية الرمز، ارجع خطوة ثم تقدّم ليصلك رمز جديد."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If the code expires, go back a step and forward again for a new one."
+          }
+        }
+      }
+    },
+    "remote.pair_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الترجمة في هذا الوضع تمر عبر خادمنا: يُرسل نص الترجمة فقط، دون صور، ليُترجم ويصل إلى تلفزيونك ولو كان التطبيق في الخلفية."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In this mode translations go through our server: only the subtitle text is sent, never images, so it is translated and reaches your TV even while the app is in the background."
+          }
+        }
+      }
+    },
+    "remote.pair_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب هذا الرمز في تطبيق التلفزيون. ينتقل الدليل وحده عند الاتصال."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type this code into the TV app. The guide moves on by itself once it connects."
+          }
+        }
+      }
+    },
+    "remote.play_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح PS Remote Play من الشاشة الرئيسية."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open PS Remote Play from the Home Screen."
+          }
+        }
+      }
+    },
+    "remote.play_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اذهب إلى مشهد فيه حوار أو ترجمة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to a scene with dialogue or subtitles."
+          }
+        }
+      }
+    },
+    "remote.play_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انظر إلى التلفزيون: تظهر الترجمة فوق اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Look at the TV: the translation appears over the game."
+          }
+        }
+      }
+    },
+    "remote.play_arrived" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وصلت أول ترجمة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The first subtitle arrived"
+          }
+        }
+      }
+    },
+    "remote.play_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا شيء بعد؟ تأكد أن مربع الترجمة في مكانه، وأن الترجمة الإنجليزية مفعلة في اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nothing yet? Check that the box is in place and English subtitles are on in the game."
+          }
+        }
+      }
+    },
+    "remote.play_shown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ظهرت الترجمة على التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The translation shows on the TV"
+          }
+        }
+      }
+    },
+    "remote.play_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح PS Remote Play والعب. عند أول ترجمة تظهر، ينتقل الدليل وحده."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open PS Remote Play and play. When the first subtitle is read, the guide moves on by itself."
+          }
+        }
+      }
+    },
+    "remote.play_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العب"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play"
+          }
+        }
+      }
+    },
+    "remote.region_bottom" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أسفل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom"
+          }
+        }
+      }
+    },
+    "remote.region_done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حفظت مكان الترجمة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtitle place saved"
+          }
+        }
+      }
+    },
+    "remote.region_middle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الوسط"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Middle"
+          }
+        }
+      }
+    },
+    "remote.region_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أغلب الألعاب تعرض الترجمة أسفل الشاشة. اجعل المربع يحيط بسطرين."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Most games show subtitles at the bottom. Make the box fit two lines."
+          }
+        }
+      }
+    },
+    "remote.region_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسحب المربع إلى مكان ترجمة اللعبة، ومن زاويته غيّر حجمه. يُقرأ هذا الجزء فقط."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag the box to where the game shows subtitles, and resize it from its corner. Only this part is read."
+          }
+        }
+      }
+    },
+    "remote.region_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدّد مكان الترجمة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark where the subtitles are"
+          }
+        }
+      }
+    },
+    "remote.region_top" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أعلى"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top"
+          }
+        }
+      }
+    },
+    "remote.sends_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند التشغيل يقرأ البث مربع الترجمة فقط ويرسل ترجمته إلى التلفزيون عبر خادمنا. أوقفه لاستخدام البث العادي."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When on, the broadcast reads only the subtitle box and sends its translation to the TV through our server. Turn off for the regular broadcast."
+          }
+        }
+      }
+    },
+    "remote.sends_to_tv" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أرسل البث إلى التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send the broadcast to the TV"
+          }
+        }
+      }
+    },
+    "remote.tv_app_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح Downloader واكتب العنوان واضغط Go، ثم تثبيت."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Downloader, type the address, select Go, then Install."
+          }
+        }
+      }
+    },
+    "remote.tv_app_4" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح «مترجم الألعاب للتلفزيون» واسمح له بالظهور فوق التطبيقات."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open “Game Translator TV” and allow it to display over other apps."
+          }
+        }
+      }
+    },
+    "remote.tv_app_done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبّتّه وفتحته على التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed and open on the TV"
+          }
+        }
+      }
+    },
+    "remote.tv_app_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "على تلفزيون Google TV أو Android TV، من تطبيق Downloader، بهذا العنوان:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On your Google TV or Android TV, from the Downloader app, with this address:"
+          }
+        }
+      }
+    },
+    "remote.tv_app_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبّت تطبيق التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install the TV app"
+          }
+        }
+      }
+    },
+    "remote.waiting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بانتظار اكتمال هذه الخطوة…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for this step…"
           }
         }
       }
@@ -4393,13 +5277,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "على التلفزيون، والترجمة فوق اللعبة"
+            "value" : "من جهاز الألعاب، والترجمة فوق اللعبة"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On a TV, translation over the game"
+            "value" : "From a console, translation over the game"
           }
         }
       }
@@ -4410,13 +5294,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "نربط تلفزيون Google TV خطوة بخطوة."
+            "value" : "اللعب عن بُعد والتلفزيون، خطوة بخطوة."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We'll link a Google TV step by step."
+            "value" : "Remote Play and your TV, step by step."
           }
         }
       }

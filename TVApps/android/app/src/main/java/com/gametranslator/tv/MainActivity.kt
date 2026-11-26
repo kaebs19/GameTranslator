@@ -136,12 +136,14 @@ class MainActivity : Activity() {
     }
 
     private fun submit() {
-        val code = PairingCode.decode(digits) ?: return failed(R.string.pair_wrong)
+        val isServer = PairingCode.isServerCode(digits)
+        val code = if (isServer) null else PairingCode.decode(digits) ?: return failed(R.string.pair_wrong)
+        val typed = digits
         isPairing = true
         message?.setText(R.string.pair_connecting)
         thread {
             try {
-                val phone = Phone.pair(code)
+                val phone = if (code == null) Phone.pairWithServer(typed) else Phone.pair(code)
                 runOnUiThread { paired(phone) }
             } catch (failure: Phone.PairingFailed) {
                 val text = when (failure.error) {

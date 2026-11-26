@@ -18,6 +18,8 @@ final class LiveSession: @unchecked Sendable {
     private let channel: LiveChannel
     private let settings = UserDefaultsSettingsStore()
     private let processor: LiveFrameProcessor
+    /// Used instead of `processor` while remote play sends to the TV.
+    private let relay: TVRelay
     private let queue = DispatchQueue(label: "live.ocr", qos: .utility)
     private let gate = OSAllocatedUnfairLock(initialState: FrameGate(interval: 1))
     private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "BroadcastExtension", category: "live")
@@ -33,6 +35,18 @@ final class LiveSession: @unchecked Sendable {
         processor = LiveFrameProcessor {
             try recognizer.recognize($0, orientation: $1, language: $2)
         }
+        // Subtitles are clean digital text on a small crop, so the careful reader fits in memory.
+        let careful = OCRService(mode: .accurate)
+        let client = SubGGClient()
+        relay = TVRelay(
+            recognize: { try careful.recognize($0, orientation: $1, language: $2) },
+            send: { texts in
+                let current = UserDefaultsSettingsStore().load()
+                _ = try? await client.translateForTV(
+                    texts, pair: current.pair, style: current.server.style, context: [], look: TVLook(current.tv)
+                )
+            }
+        )
     }
 
     // MARK: Lifecycle
@@ -115,6 +129,15 @@ final class LiveSession: @unchecked Sendable {
         }
         do {
             let current = settings.load()
+            // Subtitles change quickly; the TV should follow within half a second.
+            gate.withLock { $0.interval = current.remotePlay.sendsToTV ? 0.5 : 1 }
+            if current.remotePlay.sendsToTV {
+                let lines = try relay.process(
+                    frame, orientation: orientation, region: current.remotePlay.region, language: current.source
+                )
+                if !lines.isEmpty { try publish(lines) }
+                return
+            }
             if case .newLines(let lines) = try processor.process(frame, orientation: orientation, language: current.source) {
                 try publish(lines)
                 if current.live.sendsNotifications { notify() }

@@ -1,3 +1,4 @@
+import CoreGraphics
 import Testing
 @testable import GameTranslator
 
@@ -50,5 +51,60 @@ struct DeviceReadinessTests {
     @Test func enhancedTranslationFollowsTheSetting() {
         #expect(DeviceReadiness().enhanced == .off)
         #expect(DeviceReadiness(usesEnhancedTranslation: true).enhanced == .ready)
+    }
+}
+
+private final class StubLinks: ServerTVLinking, @unchecked Sendable {
+    var list: [ServerTV] = []
+    func newTVCode() async throws -> String { "9123456" }
+    func tvs() async throws -> [ServerTV] { list }
+    func removeTV(_ id: String) async throws {}
+}
+
+@MainActor
+struct RemotePlayGuideTests {
+    private let links = StubLinks()
+    private let settings = InMemorySettingsStore()
+    private final class Live { var lines = 0; var running = false }
+    private let live = Live()
+
+    private func model() -> RemotePlayGuideViewModel {
+        RemotePlayGuideViewModel(
+            links: links, settings: settings, lineCount: { [live] in live.lines }, isBroadcasting: { [live] in live.running }
+        )
+    }
+
+    @Test func eachStepWaitsUntilItIsDone() async throws {
+        let guide = model()
+        #expect(guide.step == .console && !guide.canContinue)
+        guide.next()
+        #expect(guide.step == .console)
+        guide.confirm()
+        guide.next()
+        guide.confirm()
+        guide.next()
+        guide.confirm()
+        guide.next()
+        #expect(guide.step == .pair && !guide.canContinue)
+        links.list = [ServerTV(id: "a", name: "TV", isConnected: true)]
+        #expect(try await eventually { guide.canContinue })
+        #expect(guide.code == "9123456")
+        guide.next()
+        #expect(guide.step == .region)
+        guide.setRegionPreset(CGRect(x: 0.1, y: 0.06, width: 0.8, height: 0.22))
+        guide.confirm()
+        #expect(settings.load().remotePlay.region.minY == 0.06)
+        guide.next()
+        #expect(guide.step == .broadcast && settings.load().remotePlay.sendsToTV && !guide.canContinue)
+        live.running = true
+        #expect(try await eventually { guide.canContinue })
+        live.lines = 4
+        guide.next()
+        #expect(guide.step == .play && !guide.canContinue)
+        live.lines = 5
+        #expect(try await eventually { guide.canContinue })
+        guide.next()
+        #expect(guide.isLast)
+        guide.stop()
     }
 }

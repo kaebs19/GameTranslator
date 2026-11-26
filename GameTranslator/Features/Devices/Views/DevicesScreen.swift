@@ -12,6 +12,15 @@ struct DevicesScreen: View {
     let openSettings: () -> Void
     /// Set from outside to open the TV guide, for example after the introduction.
     @Binding var opensGuide: Bool
+    let makeRemoteGuide: () -> RemotePlayGuideViewModel
+    let remoteSendsToTV: () -> Bool
+    let setRemoteSendsToTV: (Bool) -> Void
+    /// Set from outside to open the remote-play guide.
+    @Binding var opensRemoteGuide: Bool
+    @State private var remoteGuide: RemotePlayGuideViewModel?
+    @State private var sendsToTV = false
+    @Environment(\.locale) private var locale
+    @Environment(\.layoutDirection) private var direction
     @State private var guide: TVGuide?
     @State private var usesEnhanced = false
 
@@ -19,6 +28,7 @@ struct DevicesScreen: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: AppSpacing.large) {
+                    remotePlay
                     status
                     console
                     TVSection(viewModel: tv, isActive: isActive, guide: $guide)
@@ -34,7 +44,21 @@ struct DevicesScreen: View {
         }
         .tint(Color.appAccent)
         .onChange(of: isActive, initial: true) { _, active in
-            if active { usesEnhanced = usesEnhancedTranslation() }
+            if active {
+                usesEnhanced = usesEnhancedTranslation()
+                sendsToTV = remoteSendsToTV()
+            }
+        }
+        .onChange(of: opensRemoteGuide, initial: true) { _, opens in
+            guard opens else { return }
+            opensRemoteGuide = false
+            remoteGuide = makeRemoteGuide()
+        }
+        .sheet(item: $remoteGuide, onDismiss: { sendsToTV = remoteSendsToTV() }) { guide in
+            RemotePlayGuideView(viewModel: guide)
+                .environment(\.locale, locale)
+                .environment(\.layoutDirection, direction)
+                .presentationBackground(Color.appBackground)
         }
         .onChange(of: opensGuide, initial: true) { _, opens in
             guard opens else { return }
@@ -48,6 +72,34 @@ struct DevicesScreen: View {
             isBroadcasting: isBroadcasting, pairedTVs: tv.tvs.count,
             connectedTVs: tv.tvs.filter(tv.isConnected).count, usesEnhancedTranslation: usesEnhanced
         )
+    }
+
+    // MARK: Remote play
+
+    private var remotePlay: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.medium) {
+            HStack(spacing: AppSpacing.medium) {
+                IconTile(icon: "gamecontroller.fill", tint: .appAccent)
+                Text(.remoteCardTitle)
+                    .font(.title3.bold())
+                    .foregroundStyle(Color.appTextPrimary)
+            }
+            Text(.remoteCardText)
+                .font(.subheadline)
+                .foregroundStyle(Color.appTextSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+            AppButton(.remoteCardStart, icon: "list.number", isWide: true) { remoteGuide = makeRemoteGuide() }
+                .buttonStyle(.primary)
+            Toggle(isOn: Binding(get: { sendsToTV }, set: { sendsToTV = $0; setRemoteSendsToTV($0) })) {
+                Text(.remoteSendsToTv).font(.body.weight(.medium)).foregroundStyle(Color.appTextPrimary)
+            }
+            Text(.remoteSendsNote)
+                .font(.footnote)
+                .foregroundStyle(Color.appTextSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(AppSpacing.regular)
+        .card()
     }
 
     // MARK: Status

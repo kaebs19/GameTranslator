@@ -1,3 +1,4 @@
+import CoreGraphics
 import Foundation
 
 nonisolated protocol SettingsStoring {
@@ -27,6 +28,8 @@ nonisolated struct UserDefaultsSettingsStore: SettingsStoring {
         static let tvShowsOriginal = "tv.showsOriginal"
         static let usesServer = "server.isEnabled"
         static let serverStyle = "server.style"
+        static let remoteRegion = "remotePlay.region"
+        static let remoteSendsToTV = "remotePlay.sendsToTV"
     }
 
     private let defaults: UserDefaults
@@ -73,6 +76,10 @@ nonisolated struct UserDefaultsSettingsStore: SettingsStoring {
             settings.tv.textSize = value
         }
         if let value = defaults.object(forKey: Key.usesServer) as? Bool { settings.server.isEnabled = value }
+        if let value = defaults.object(forKey: Key.remoteSendsToTV) as? Bool { settings.remotePlay.sendsToTV = value }
+        if let value = defaults.array(forKey: Key.remoteRegion) as? [Double], value.count == 4 {
+            settings.remotePlay.region = RemotePlaySettings.clamped(CGRect(x: value[0], y: value[1], width: value[2], height: value[3]))
+        }
         if let value = defaults.string(forKey: Key.serverStyle).flatMap(ServerSettings.Style.init) {
             settings.server.style = value
         }
@@ -99,5 +106,8 @@ nonisolated struct UserDefaultsSettingsStore: SettingsStoring {
         defaults.set(settings.tv.showsOriginal, forKey: Key.tvShowsOriginal)
         defaults.set(settings.server.isEnabled, forKey: Key.usesServer)
         defaults.set(settings.server.style.rawValue, forKey: Key.serverStyle)
+        defaults.set(settings.remotePlay.sendsToTV, forKey: Key.remoteSendsToTV)
+        let region = settings.remotePlay.region
+        defaults.set([region.minX, region.minY, region.width, region.height].map(Double.init), forKey: Key.remoteRegion)
     }
 }

@@ -102,7 +102,7 @@ struct SubGGClientTests {
     @Test func reportsTheDailyLimit() async {
         tokens.key = "t"
         FakeServerProtocol.handler = { _ in (429, "") }
-        await #expect(throws: AppError.cloudLimitReached) {
+        await #expect(throws: SubGGError.dailyLimit) {
             try await client().translate(["Go"], pair: pair, style: .standard, context: [])
         }
     }

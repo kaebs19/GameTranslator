@@ -16,6 +16,7 @@ struct RootView: View {
     @State private var showsOnboarding = false
     /// Asks My Devices to open the TV guide.
     @State private var opensTVGuide = false
+    @State private var opensRemoteGuide = false
     /// Never in the way of a result someone asked for with a shortcut.
     @State private var showsSplash: Bool
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
@@ -94,7 +95,11 @@ struct RootView: View {
                 DevicesScreen(
                     tv: tv, isActive: selection == .devices && !isCovered, isBroadcasting: live.isRunning,
                     usesEnhancedTranslation: { dependencies.usesEnhancedTranslation },
-                    perform: connect, openSettings: { selection = .settings }, opensGuide: $opensTVGuide
+                    perform: connect, openSettings: { selection = .settings }, opensGuide: $opensTVGuide,
+                    makeRemoteGuide: dependencies.makeRemotePlayGuideViewModel,
+                    remoteSendsToTV: { dependencies.remotePlaySendsToTV },
+                    setRemoteSendsToTV: { dependencies.remotePlaySendsToTV = $0 },
+                    opensRemoteGuide: $opensRemoteGuide
                 )
                 .id(language)
                 .toolbar(.hidden, for: .tabBar)
@@ -163,7 +168,7 @@ struct RootView: View {
         switch setup {
         case .tvOverlay:
             selection = .devices
-            opensTVGuide = true
+            opensRemoteGuide = true
         case .phoneGame:
             sheet = .live
         case .camera, nil:

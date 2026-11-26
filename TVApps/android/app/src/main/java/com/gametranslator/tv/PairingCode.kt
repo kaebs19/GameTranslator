@@ -14,8 +14,16 @@ data class PairingCode(val address: String, val pin: String) {
             '4' to Range(0, 32, 10),
         )
 
+        /** Codes from the SubGG server, used while the phone's app is in the background. */
+        const val SERVER_PREFIX = '9'
+        private const val SERVER_LENGTH = 7
+
         /** `null` until the first digit says. */
-        fun length(first: Char?): Int? = ranges[first]?.let { 1 + it.digits + PIN_LENGTH }
+        fun length(first: Char?): Int? =
+            if (first == SERVER_PREFIX) SERVER_LENGTH else ranges[first]?.let { 1 + it.digits + PIN_LENGTH }
+
+        fun isServerCode(digits: String) =
+            digits.length == SERVER_LENGTH && digits.first() == SERVER_PREFIX && digits.all { it in '0'..'9' }
 
         fun decode(digits: String): PairingCode? {
             val range = ranges[digits.firstOrNull()] ?: return null

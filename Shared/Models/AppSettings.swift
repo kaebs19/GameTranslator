@@ -20,6 +20,7 @@ nonisolated struct AppSettings: Equatable, Sendable {
     var reading = ReadingSettings()
     var tv = TVSettings()
     var server = ServerSettings()
+    var remotePlay = RemotePlaySettings()
     /// Off by default: nothing leaves the device unless the user turns this on.
     var usesCloudTranslation = false
 

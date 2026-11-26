@@ -1,18 +1,25 @@
 import Foundation
 import Security
 
+nonisolated enum KeychainError: Error {
+    case notSaved
+}
+
 nonisolated protocol KeyStoring: Sendable {
     func load() -> String?
     func save(_ key: String) throws
     func remove()
 }
 
-/// Keeps the API key in the Keychain of this device only; it is not backed up or synced.
+/// Keeps a secret in the Keychain of this device only; it is not backed up or synced.
 nonisolated struct KeychainKeyStore: KeyStoring {
     private let account: String
+    /// The App Group, for a secret the broadcast extension also reads.
+    private let accessGroup: String?
 
-    init(account: String = "cloudTranslationKey") {
+    init(account: String = "cloudTranslationKey", accessGroup: String? = nil) {
         self.account = account
+        self.accessGroup = accessGroup
     }
 
     func load() -> String? {
@@ -30,7 +37,7 @@ nonisolated struct KeychainKeyStore: KeyStoring {
         query[kSecValueData] = Data(key.utf8)
         // Readable after the first unlock, for translating in the background.
         query[kSecAttrAccessible] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-        guard SecItemAdd(query as CFDictionary, nil) == errSecSuccess else { throw AppError.keyNotSaved }
+        guard SecItemAdd(query as CFDictionary, nil) == errSecSuccess else { throw KeychainError.notSaved }
     }
 
     func remove() {
@@ -38,6 +45,8 @@ nonisolated struct KeychainKeyStore: KeyStoring {
     }
 
     private var baseQuery: [CFString: Any] {
-        [kSecClass: kSecClassGenericPassword, kSecAttrService: "CloudTranslation", kSecAttrAccount: account]
+        var query: [CFString: Any] = [kSecClass: kSecClassGenericPassword, kSecAttrService: "CloudTranslation", kSecAttrAccount: account]
+        if let accessGroup, !accessGroup.isEmpty { query[kSecAttrAccessGroup] = accessGroup }
+        return query
     }
 }

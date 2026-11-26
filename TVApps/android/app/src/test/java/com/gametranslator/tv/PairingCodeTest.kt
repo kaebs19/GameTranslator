@@ -1,7 +1,9 @@
 package com.gametranslator.tv
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /** The same examples as PairingCodeTests.swift. */
@@ -18,5 +20,12 @@ class PairingCodeTest {
     @Test fun refusesOtherDigits() {
         listOf("", "1", "0003054821", "5003054821", "100305482", "10030548211", "1999994821", "1abcde4821")
             .forEach { assertNull(PairingCode.decode(it)) }
+    }
+
+    @Test fun recognizesServerCodes() {
+        assertEquals(7, PairingCode.length('9'))
+        assertTrue(PairingCode.isServerCode("9123456"))
+        listOf("912345", "91234567", "8123456", "9a23456").forEach { assertFalse(PairingCode.isServerCode(it)) }
+        assertNull(PairingCode.decode("9123456"))
     }
 }

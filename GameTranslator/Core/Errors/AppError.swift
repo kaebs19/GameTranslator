@@ -53,6 +53,7 @@ nonisolated enum AppError: Error, Equatable {
 
     /// Keeps known errors and wraps anything the system throws.
     init(_ error: any Error) {
+        if error is KeychainError { self = .keyNotSaved; return }
         self = error as? AppError ?? .translationFailed(error.localizedDescription)
     }
 

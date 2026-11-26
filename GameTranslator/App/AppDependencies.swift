@@ -97,6 +97,24 @@ final class AppDependencies {
         TranslationResultViewModel(result: result, photos: photos)
     }
 
+    /// Whether the broadcast sends to the TV through the server.
+    var remotePlaySendsToTV: Bool {
+        get { settings.load().remotePlay.sendsToTV }
+        set {
+            var current = settings.load()
+            current.remotePlay.sendsToTV = newValue
+            settings.save(current)
+        }
+    }
+
+    func makeRemotePlayGuideViewModel() -> RemotePlayGuideViewModel {
+        let live = liveViewModel
+        return RemotePlayGuideViewModel(
+            links: SubGGClient(), settings: settings,
+            lineCount: { live.lines.count }, isBroadcasting: { live.isRunning }
+        )
+    }
+
     /// For the readiness card, which reads it when shown.
     var usesEnhancedTranslation: Bool { settings.load().server.isEnabled }
 
