@@ -27,7 +27,12 @@ Replace every `<...>` first.
 
 **No account is needed.** There are no purchases, ads or analytics.
 
-**Network.** The app makes no network requests by default. *Settings → Cloud Translation* is off. If the user enters their own Google Cloud Translation key and agrees to a consent dialog, recognized text (never images) is sent to Google only when on-device translation fails.
+**Network.** The app makes no network requests by default. Two optional settings send text (never images), both off by default:
+
+- *Settings → Enhanced Translation*: in camera mode, recognized text is sent to our server (api.subgg.app), which translates it with a language model and keeps the result in a shared cache. The app registers an anonymous random device token; no account, name or identifier of the person is sent. The on-device translation is shown first and replaced when the better one arrives.
+- *Settings → Cloud Translation*: if the user enters their own Google Cloud Translation key and agrees to a consent dialog, recognized text is sent to Google only when on-device translation fails.
+
+Privacy policy: https://subgg.app/privacy/
 
 **TV display.** *TV* tab, off by default. When on and the app is open, the app listens on the local network (port 8787) and sends translated text, as plain HTTP and only to TVs the user paired with a code shown on this screen. No images, no internet. To try it without a TV: turn it on, open the address shown under *Another TV or a Tablet* in a browser on the same Wi-Fi, type the last four digits of the code, then tap *Test on TV*.
 
@@ -38,6 +43,7 @@ Replace every `<...>` first.
 
 **Demo video:** <LINK>
 **Contact:** <NAME, EMAIL, PHONE>
+**Support page:** https://subgg.app/contact/
 
 ---
 
@@ -52,6 +58,6 @@ Record with a second camera, or with a Mac through QuickTime: iOS cannot run a s
 5. Switch to a game or web page with text; play or scroll.
 6. Return: show the translated transcript.
 7. Stop the broadcast; the state becomes "stopped".
-8. Settings: cloud translation off, privacy policy.
+8. Settings: enhanced and cloud translation off by default, privacy policy.
 
 Use a game or page you have the right to show.
