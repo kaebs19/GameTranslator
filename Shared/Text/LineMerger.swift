@@ -55,7 +55,8 @@ nonisolated enum LineMerger {
         // Lines without tall letters have shorter boxes at the same font size.
         guard max(a.height, b.height) / height <= 1.6 else { return false }
         let gap = b.minY - a.maxY
-        return gap <= height && gap >= -height * 0.4
+        // A tilted camera makes the boxes taller, so they overlap more than the text does.
+        return gap <= height && gap >= -height * 0.6
     }
 
     private static func isAligned(_ a: CGRect, _ b: CGRect, _ aspect: CGFloat) -> Bool {
@@ -70,7 +71,10 @@ nonisolated enum LineMerger {
 
     private static let openEndings: Set<String> = [
         "a", "an", "the", "to", "of", "and", "or", "but", "in", "on", "at", "for", "with", "from", "by", "as",
-        "is", "are", "was", "be", "your", "my", "his", "her", "their", "our", "this", "that", "if", "before", "after"
+        "is", "are", "was", "be", "your", "my", "his", "her", "their", "our", "this", "that", "if", "before", "after",
+        "into", "onto", "about", "than", "so", "when", "where", "while", "because", "until", "through", "who",
+        "which", "will", "would", "can", "could", "should", "must", "have", "has", "had", "were", "been", "not",
+        "we", "i", "they", "these", "those", "its", "every", "each", "some", "any", "no", "very", "more", "most"
     ]
 
     static func readsOn(from first: String, to second: String) -> Bool {

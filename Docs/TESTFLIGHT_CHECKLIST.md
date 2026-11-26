@@ -2,7 +2,7 @@
 
 ## Blocks the upload
 - [x] **App icon**: 1024×1024, opaque, in `AppIcon.appiconset`.
-- [ ] **Bundle ID** matches the App Store Connect record. Today: `com.gametranslator.GameTranslator`. If it changes, also change both extension IDs (they must start with the app's ID), the test target, and `APP_GROUP_ID`.
+- [ ] **Bundle ID** matches the App Store Connect record. Today: `com.gametranslator` (extensions: `.BroadcastExtension`, `.LiveActivityExtension`; App Group unchanged: `group.com.gametranslator.GameTranslator`). If it changes, also change both extension IDs (they must start with the app's ID), the test target, and `APP_GROUP_ID`.
 - [ ] **Signing** for three targets: `GameTranslator`, `BroadcastExtension`, `LiveActivityExtension`.
 - [ ] **App Group** registered and enabled for `GameTranslator` and `BroadcastExtension`.
 - [ ] Same version and build number in all three targets.
@@ -10,7 +10,7 @@
 
 ## Likely review problems
 - [ ] The TV tab is a placeholder. App Review rejects unfinished screens: build it or hide it first.
-- [ ] `UIBackgroundModes: remote-notification`, the Push entitlement (`aps-environment`) and the CloudKit entitlement come from the Xcode template and are unused. Unused background modes are a known rejection reason (guideline 2.5.4).
+- [ ] `UIBackgroundModes: remote-notification` and the Push entitlement (`aps-environment`) come from the Xcode template and are unused. Unused background modes are a known rejection reason (guideline 2.5.4).
 - [ ] `UIBackgroundModes: screen-capture` is used only by the experimental iOS 27 capture. If that feature is not shipping, remove both.
 - [ ] The setting labelled "Experimental" is fine for TestFlight, but guideline 2.2 does not want beta features on the App Store: either remove it or, once it works, drop the label.
 - [ ] Privacy policy is online and its URL is in App Store Connect. Source: `Docs/privacy-policy.html` (fill in the contact and date first).
@@ -80,3 +80,12 @@ Must match behavior. Decide these yourself; the suggestions follow the code as w
 ### General
 - [ ] Arabic and English, largest text size, VoiceOver, iPad.
 - [ ] iOS 18 device if available.
+
+## TV
+- [ ] iPhone and TV on the same Wi-Fi: pairing with the code, wrong code, five wrong codes (locked 30 s).
+- [ ] A real line from the camera reaches the TV; pausing clears it; locking the phone clears it within 12 s; reopening reconnects.
+- [ ] Text at the top is not read back by the camera.
+- [ ] Android/Google TV (built in): overlay over a real HDMI game, HDR and game mode, after standby.
+- [ ] Samsung: HDMI picture and sound inside the app, input lag acceptable.
+- [ ] LG: HDMI picture inside the app (undocumented, may fail), otherwise text only.
+- [ ] Before release: the receiver apps must be obtainable, or remove their guides from the TV tab.

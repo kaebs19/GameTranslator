@@ -20,6 +20,8 @@ nonisolated enum AppError: Error, Equatable {
     case cameraUnavailable
     case cameraAccessDenied
     case cameraLanguageUnsupported
+    case noLocalNetwork
+    case tvServerFailed
     case translationFailed(String)
 
     var message: LocalizedStringResource {
@@ -43,6 +45,8 @@ nonisolated enum AppError: Error, Equatable {
         case .cameraUnavailable: .errorCameraUnavailable
         case .cameraAccessDenied: .errorCameraAccessDenied
         case .cameraLanguageUnsupported: .errorCameraLanguageUnsupported
+        case .noLocalNetwork: .errorNoLocalNetwork
+        case .tvServerFailed: .errorTvServerFailed
         case .translationFailed(let reason): .errorTranslationFailed(reason)
         }
     }

@@ -29,6 +29,8 @@ Replace every `<...>` first.
 
 **Network.** The app makes no network requests by default. *Settings → Cloud Translation* is off. If the user enters their own Google Cloud Translation key and agrees to a consent dialog, recognized text (never images) is sent to Google only when on-device translation fails.
 
+**TV display.** *TV* tab, off by default. When on and the app is open, the app listens on the local network (port 8787) and sends translated text, as plain HTTP and only to TVs the user paired with a code shown on this screen. No images, no internet. To try it without a TV: turn it on, open the address shown under *Another TV or a Tablet* in a browser on the same Wi-Fi, type the last four digits of the code, then tap *Test on TV*.
+
 **Background modes**
 
 - `screen-capture` (iOS 27+): used only by the optional "In-App Capture (Experimental)" setting, which keeps a user-started ScreenCaptureKit stream running while the user plays.

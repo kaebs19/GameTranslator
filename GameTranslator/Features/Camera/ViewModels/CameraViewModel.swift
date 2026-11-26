@@ -18,6 +18,10 @@ final class CameraViewModel {
 
     private(set) var state: State = .idle
     private(set) var items: [Item] = []
+    /// What the user was reading before `items`, until they are translated.
+    private var previous: [Item] = []
+    /// The text has left the box. The phone keeps it to be read, but the TV would cover the game with it.
+    @ObservationIgnored private var isGone = false
     /// The user started reading. The picture is shown either way.
     private(set) var isTranslating = false
     private(set) var isEditingBox = false
@@ -38,9 +42,12 @@ final class CameraViewModel {
     private let speaker: any Speaking
     private let settings: any SettingsStoring
     private let history: any HistoryRecording
+    private let tv: any TVPresenting
+    private let refiner: (any TranslationRefining)?
     private let readableLanguages: Set<AppLanguage>
     /// A phone on a stand is not touched, and would lock in the middle of a game.
     private let keepScreenOn: (Bool) -> Void
+    private let now: () -> TimeInterval
     @ObservationIgnored private var stabilizer = TextStabilizer()
     /// Translations of text only one frame has shown so far.
     @ObservationIgnored private var unconfirmed: [(original: String, translation: String)] = []
@@ -53,7 +60,9 @@ final class CameraViewModel {
     init(
         camera: any CameraProviding, translator: any TranslationProviding, languages: any LanguagePreparing,
         speaker: any Speaking, settings: any SettingsStoring, history: any HistoryRecording,
-        readableLanguages: Set<AppLanguage>, keepScreenOn: @escaping (Bool) -> Void
+        tv: any TVPresenting, refiner: (any TranslationRefining)? = nil, readableLanguages: Set<AppLanguage>,
+        keepScreenOn: @escaping (Bool) -> Void,
+        now: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime }
     ) {
         self.camera = camera
         self.translator = translator
@@ -61,7 +70,10 @@ final class CameraViewModel {
         self.speaker = speaker
         self.settings = settings
         self.history = history
+        self.tv = tv
+        self.refiner = refiner
         self.keepScreenOn = keepScreenOn
+        self.now = now
         current = settings.load()
         self.readableLanguages = readableLanguages
     }
@@ -80,6 +92,7 @@ final class CameraViewModel {
         guard !current.pair.isSameLanguage else { return state = .failed(.sameLanguage) }
         guard readableLanguages.contains(current.source) else { return state = .failed(.cameraLanguageUnsupported) }
         state = .running
+        if isTranslating { showOnTV() }
         applySpeed()
         let stream = camera.start(language: current.source)
         updateReading()
@@ -94,6 +107,7 @@ final class CameraViewModel {
         reading = nil
         camera.stop()
         speaker.stop()
+        tv.show([], target: current.target)
         isTorchOn = false
         endFreeze()
         // An error stays visible behind whatever opened; the next start tries again.
@@ -155,6 +169,8 @@ final class CameraViewModel {
 
     func toggleTranslating() {
         isTranslating.toggle()
+        // Paused text would cover the game for nothing.
+        if isTranslating { showOnTV() } else { tv.show([], target: current.target) }
         if isTranslating { isEditingBox = false }
         if isFrozen { endFreeze() }
         updateReading()
@@ -235,10 +251,25 @@ final class CameraViewModel {
 
     // MARK: Result
 
+    /// The last translation stays readable while its successor is being translated.
+    var displayed: [Item] {
+        let isReady = translationError != nil || items.contains { $0.translation != nil }
+        return isReady || previous.isEmpty ? items : previous
+    }
+
     var hasResult: Bool { !items.isEmpty || translationError != nil }
 
     /// All translations shown, ready to copy or read aloud.
-    var translatedText: String { items.compactMap(\.translation).joined(separator: "\n") }
+    var translatedText: String { displayed.compactMap(\.translation).joined(separator: "\n") }
+
+    /// `nil` until something is translated.
+    var shared: SharedTranslation? {
+        let lines = displayed.compactMap { item in
+            item.translation.map { SharedTranslation.Line(original: item.original, translation: $0) }
+        }
+        guard !lines.isEmpty else { return nil }
+        return SharedTranslation(lines: lines, pair: current.pair, includesOriginal: current.reading.showsOriginal)
+    }
 
     var isSpeaking: Bool { speaker.isSpeaking }
 
@@ -258,8 +289,13 @@ final class CameraViewModel {
         stabilizer.reset()
         unconfirmed = []
         items = []
+        previous = []
+        isGone = false
         translationError = nil
+        showOnTV()
     }
+
+    private func showOnTV() { tv.show(isGone ? [] : shared?.lines ?? [], target: current.target) }
 
     // MARK: Pipeline
 
@@ -278,14 +314,20 @@ final class CameraViewModel {
         status = statusTracker.status(for: reading)
         let readable = reading.lines.filter { TextNormalizer.looksLikeText($0.text) }
         let texts = LineMerger.blocks(from: readable, aspectRatio: regionAspect).map(\.text)
-        let changed = isFrozen ? changedStill(texts) : stabilizer.update(texts, isTrusted: isClear(readable))
+        let changed = isFrozen ? changedStill(texts)
+            : stabilizer.update(texts, isTrusted: isClear(readable), at: now())
         guard let changed else { return recordConfirmed() }
+        isGone = changed.isEmpty
+        if isGone, !isFrozen { return showOnTV() }
         // Replaced before a second frame agreed: most likely misread while moving.
         unconfirmed = []
+        previous = changed.isEmpty ? [] : displayed
         items = changed.map { text in
             // Lines that were already there keep their translation while the rest arrives.
             items.first { $0.original == text } ?? Item(id: UUID(), original: text)
         }
+        // Otherwise the last line stays on the TV until its successor is translated.
+        if !items.contains(where: { $0.translation == nil }) { showOnTV() }
         translate()
     }
 
@@ -320,6 +362,7 @@ final class CameraViewModel {
             } catch {
                 guard !Task.isCancelled else { return }
                 self?.translationError = AppError(error)
+                self?.showOnTV()
             }
         }
     }
@@ -328,7 +371,9 @@ final class CameraViewModel {
         for index in items.indices {
             if let text = translations[items[index].original] { items[index].translation = text }
         }
+        showOnTV()
         let finished = items.compactMap { item in translations[item.original].map { (item.original, $0) } }
+        refine(finished.map(\.0), pair: pair)
         if isFrozen || stabilizer.isConfirmed || !current.reading.isContinuous {
             history.record(finished, pair: pair, source: .camera)
         } else {
@@ -340,6 +385,30 @@ final class CameraViewModel {
         }
         // The first translation may have downloaded the languages.
         if readiness != .ready { await refreshReadiness() }
+    }
+}
+
+extension CameraViewModel {
+    /// The instant translation is shown first; a better one replaces it when it arrives.
+    private func refine(_ texts: [String], pair: LanguagePair) {
+        guard let refiner, !texts.isEmpty else { return }
+        let context = Array(previous.map(\.original).suffix(3))
+        Task { [weak self] in
+            let better = await refiner.refined(texts, pair: pair, context: context)
+            guard let self, !better.isEmpty, pair == current.pair else { return }
+            applyRefined(better)
+        }
+    }
+
+    /// Only lines still on screen change.
+    private func applyRefined(_ better: [String: String]) {
+        var changed = false
+        for index in items.indices {
+            guard let text = better[items[index].original], text != items[index].translation else { continue }
+            items[index].translation = text
+            changed = true
+        }
+        if changed { showOnTV() }
     }
 }
 

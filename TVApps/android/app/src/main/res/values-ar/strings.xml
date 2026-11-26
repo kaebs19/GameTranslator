@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مترجم الألعاب للتلفزيون</string>
+    <string name="pair_help">افتح «التلفزيون» في تطبيق الهاتف واكتب رمز الاقتران كاملًا.</string>
+    <string name="pair_connecting">جارٍ الاتصال…</string>
+    <string name="pair_wrong">الرمز غير صحيح.</string>
+    <string name="pair_locked">محاولات كثيرة. انتظر نصف دقيقة واكتب الرمز الجديد.</string>
+    <string name="pair_unreachable">تعذّر الوصول إلى الهاتف. تأكد من الشبكة نفسها ومن أن التطبيق مفتوح.</string>
+    <string name="delete">مسح</string>
+    <string name="permission_help">اسمح للتطبيق بالظهور فوق التطبيقات لتظهر الترجمة فوق اللعبة.</string>
+    <string name="permission_button">افتح الإعدادات</string>
+    <string name="permission_manual">لا يوجد هذا الإعداد في هذا التلفزيون. اسمح به مرة واحدة من كمبيوتر:\n%1$s</string>
+    <string name="ready_help">انتقل إلى منفذ اللعبة وستظهر الترجمة فوقها.\nإن لم يظهر شيء فوق HDMI فهذا التلفزيون لا يسمح بذلك.</string>
+    <string name="state_waiting">بانتظار الهاتف…</string>
+    <string name="state_connected">متصل بالهاتف</string>
+    <string name="start">ابدأ</string>
+    <string name="stop">أوقف</string>
+    <string name="test">اعرض سطر تجربة</string>
+    <string name="test_line">تظهر الترجمة هنا</string>
+    <string name="pair_again">اقتران من جديد</string>
+    <string name="close">أخفِ هذه الشاشة</string>
+    <string name="notification">تُعرض الترجمة فوق الصورة</string>
+</resources>

@@ -1,0 +1,13 @@
+{
+  "id": "com.gametranslator.tv",
+  "version": "1.0.0",
+  "vendor": "Game Translator",
+  "type": "web",
+  "main": "index.html",
+  "title": "Game Translator TV",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "resolution": "1920x1080",
+  "transparent": true,
+  "disableBackHistoryAPI": true
+}

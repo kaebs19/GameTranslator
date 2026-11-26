@@ -10,6 +10,7 @@ struct ScanBoxView: View {
 
     private static let touchSize: CGFloat = 44
     private static let corner = AppRadius.small
+    private static let dashes = StrokeStyle(lineWidth: 3, lineCap: .round, dash: [16, 12])
 
     var body: some View {
         GeometryReader { proxy in
@@ -43,7 +44,7 @@ struct ScanBoxView: View {
 
     private func outline(_ frame: CGRect) -> some View {
         RoundedRectangle(cornerRadius: Self.corner)
-            .strokeBorder(isEditing ? AnyShapeStyle(AppGradient.brand) : status.outline, lineWidth: 3)
+            .strokeBorder(isEditing ? AnyShapeStyle(AppGradient.brand) : status.outline, style: Self.dashes)
             .animation(.easeInOut(duration: 0.2), value: status)
             .overlay {
                 if isEditing {

@@ -2,7 +2,7 @@ import SwiftUI
 
 /// One tap instead of dragging the box into place.
 struct BoxPresetBar: View {
-    @Binding var box: ScanBox
+    @AppStorage("scanBox") private var box = ScanBox.standard
 
     var body: some View {
         HStack(spacing: AppSpacing.small * 2) {

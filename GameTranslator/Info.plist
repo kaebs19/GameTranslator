@@ -8,6 +8,8 @@
 	<string>مترجم الألعاب</string>
 	<key>NSCameraUsageDescription</key>
 	<string>لقراءة النص داخل المربع وترجمته على جهازك.</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>لإرسال الترجمة إلى التلفزيون على شبكتك.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>لحفظ الصورة المترجمة في مكتبة الصور.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

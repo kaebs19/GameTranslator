@@ -21,8 +21,10 @@ struct SettingsScreen: View {
             Form {
                 Group {
                     languagesSection
+                    boxSection
                     liveSection
                     if viewModel.supportsScreenCapture { captureSection }
+                    serverSection
                     cloudSection
                     cacheSection
                     aboutSection
@@ -64,6 +66,34 @@ struct SettingsScreen: View {
             Text(.settingsLanguages)
         } footer: {
             Text(.settingsLanguagesFooter)
+        }
+    }
+
+    private var boxSection: some View {
+        Section {
+            BoxPresetBar()
+        } header: {
+            Text(.controlsBox)
+        } footer: {
+            Text(.controlsBoxNote)
+        }
+    }
+
+    private var serverSection: some View {
+        Section {
+            Toggle(isOn: $viewModel.settings.server.isEnabled) { Text(.serverToggle) }
+            if viewModel.settings.server.isEnabled {
+                Picker(selection: $viewModel.settings.server.style) {
+                    Text(.serverStyleStandard).tag(ServerSettings.Style.standard)
+                    Text(.serverStyleGulf).tag(ServerSettings.Style.gulf)
+                } label: {
+                    Text(.serverStyle)
+                }
+            }
+        } header: {
+            Text(.serverTitle)
+        } footer: {
+            Text(.serverFooter)
         }
     }
 

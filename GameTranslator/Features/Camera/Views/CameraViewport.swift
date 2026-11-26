@@ -5,8 +5,8 @@ struct CameraViewport: View {
     let viewModel: CameraViewModel
     @Binding var box: ScanBox
     @Binding var isFullScreen: Bool
-    /// Off when the translation has a place of its own.
-    var showsTranslation = true
+    /// On the picture only when the translation has no place of its own.
+    let showsTranslation: Bool
     /// Zoom when the current pinch began.
     @State private var pinchStart: CGFloat?
     @Environment(\.layoutDirection) private var appDirection
@@ -54,19 +54,30 @@ struct CameraViewport: View {
     }
 
     @ViewBuilder private func overlay(in size: CGSize) -> some View {
-        if showsTranslation, viewModel.hasResult, !viewModel.isEditingBox {
+        if showsTranslation, !viewModel.isEditingBox {
             let boxFrame = box.frame(in: size)
             let place = OverlayPlacement(
-                box: boxFrame, in: size, top: Self.controlsHeight, bottom: isFullScreen ? PlayButton.size + AppSpacing.large * 1.5 : 0
-            ).frame
-            TranslationOverlay(viewModel: viewModel)
+                box: boxFrame, in: size, top: Self.controlsHeight,
+                bottom: isFullScreen ? PlayButton.size + AppSpacing.large * 1.5 : 0
+            )
+            overlayContent(place)
                 .environment(\.layoutDirection, appDirection)
                 // Hugs the box from whichever side it is on.
                 .frame(
-                    width: place.width, height: place.height,
-                    alignment: place.minY >= boxFrame.midY ? .top : .bottom
+                    width: place.frame.width, height: place.frame.height,
+                    alignment: place.frame.minY >= boxFrame.midY ? .top : .bottom
                 )
-                .position(x: place.midX, y: place.midY)
+                .position(x: place.frame.midX, y: place.frame.midY)
+        }
+    }
+
+    @ViewBuilder private func overlayContent(_ place: OverlayPlacement) -> some View {
+        if viewModel.hasResult {
+            TranslationOverlay(viewModel: viewModel)
+        } else if !place.coversBox {
+            // Never over the text it is waiting for, and never in the way of a pinch or drag.
+            TranslationPlaceholder(isTranslating: viewModel.isTranslating || viewModel.isFrozen)
+                .allowsHitTesting(false)
         }
     }
 
@@ -80,13 +91,13 @@ struct CameraViewport: View {
             ) {
                 withAnimation(.snappy(duration: 0.3)) { isFullScreen.toggle() }
             }
-            .buttonStyle(.icon)
+            .buttonStyle(.pictureIcon)
             if viewModel.hasTorch {
                 AppButton(
                     .cameraTorch, icon: viewModel.isTorchOn ? "flashlight.on.fill" : "flashlight.off.fill",
                     action: viewModel.toggleTorch
                 )
-                .buttonStyle(.icon)
+                .buttonStyle(.pictureIcon)
             }
             Spacer()
             if !viewModel.isFrozen { zoomButtons }
@@ -95,11 +106,9 @@ struct CameraViewport: View {
     }
 
     private var zoomButtons: some View {
-        HStack(spacing: AppSpacing.small) {
+        HStack(spacing: 0) {
             ForEach(Self.zoomSteps, id: \.self, content: zoomButton)
         }
-        .padding(AppSpacing.small)
-        .background(Color.appSurface.opacity(0.85), in: .capsule)
         .environment(\.layoutDirection, .leftToRight)
     }
 
@@ -109,9 +118,12 @@ struct CameraViewport: View {
             Text(verbatim: "\(Int(step))×")
                 .font(.subheadline.weight(.semibold))
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-                .foregroundStyle(isSelected ? Color.white : Color.appTextSecondary)
+                .foregroundStyle(Color.appTextPrimary)
+                .shadow(color: .black.opacity(0.8), radius: 3)
                 .frame(width: 36, height: 36)
-                .background { if isSelected { Circle().fill(AppGradient.action) } }
+                .overlay { if isSelected { Circle().strokeBorder(Color.appAccent, lineWidth: 2) } }
+                .frame(width: 44, height: 44)
+                .contentShape(.rect)
         }
         .accessibilityLabel(Text(.cameraZoom(Int(step))))
         .accessibilityAddTraits(isSelected ? .isSelected : [])

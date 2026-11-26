@@ -8,10 +8,10 @@ enum BoxPreset: String, CaseIterable, Identifiable {
 
     var box: ScanBox {
         switch self {
-        case .subtitles: ScanBox(rect: CGRect(x: 0.06, y: 0.48, width: 0.88, height: 0.16))
-        case .dialog: ScanBox(rect: CGRect(x: 0.1, y: 0.28, width: 0.8, height: 0.3))
-        case .menu: ScanBox(rect: CGRect(x: 0.06, y: 0.14, width: 0.5, height: 0.5))
-        case .full: ScanBox(rect: CGRect(x: 0.02, y: 0.12, width: 0.96, height: 0.56))
+        case .subtitles: ScanBox(rect: CGRect(x: 0.05, y: 0.64, width: 0.9, height: 0.22))
+        case .dialog: ScanBox(rect: CGRect(x: 0.08, y: 0.34, width: 0.84, height: 0.4))
+        case .menu: ScanBox(rect: CGRect(x: 0.05, y: 0.18, width: 0.55, height: 0.66))
+        case .full: ScanBox(rect: CGRect(x: 0.03, y: 0.16, width: 0.94, height: 0.72))
         }
     }
 

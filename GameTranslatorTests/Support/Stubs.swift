@@ -250,6 +250,14 @@ final class StubHistory: HistoryRecording {
     }
 }
 
+@MainActor
+final class StubTV: TVPresenting {
+    private(set) var history: [[String]] = []
+    var shown: [String] { history.last ?? [] }
+
+    func show(_ lines: [SharedTranslation.Line], target: AppLanguage) { history.append(lines.map(\.translation)) }
+}
+
 /// Polls because the work under test runs in its own task.
 @MainActor
 func eventually(_ condition: () -> Bool) async throws -> Bool {
@@ -258,4 +266,27 @@ func eventually(_ condition: () -> Bool) async throws -> Bool {
         try await Task.sleep(for: .milliseconds(25))
     }
     return condition()
+}
+
+final class StubRefiner: TranslationRefining {
+    var answer: [String: String] = [:]
+    private(set) var requests: [(texts: [String], context: [String])] = []
+
+    func refined(_ texts: [String], pair: LanguagePair, context: [String]) async -> [String: String] {
+        requests.append((texts, context))
+        return answer.filter { texts.contains($0.key) }
+    }
+}
+
+final class StubServer: ServerTranslating, @unchecked Sendable {
+    var fails = false
+    private(set) var requests: [(texts: [String], style: ServerSettings.Style)] = []
+
+    func translate(
+        _ texts: [String], pair: LanguagePair, style: ServerSettings.Style, context: [String]
+    ) async throws -> [String: String] {
+        requests.append((texts, style))
+        if fails { throw AppError.cloudUnreachable }
+        return Dictionary(uniqueKeysWithValues: texts.map { ($0, "server:" + $0) })
+    }
 }

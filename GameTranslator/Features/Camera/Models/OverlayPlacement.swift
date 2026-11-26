@@ -3,6 +3,8 @@ import CoreGraphics
 /// Where the translation goes: next to the box, never over the text being read if it can be helped.
 nonisolated struct OverlayPlacement: Equatable {
     let frame: CGRect
+    /// No room beside the box, so the translation lies on top of it.
+    let coversBox: Bool
 
     static let margin: CGFloat = 12
     /// The status label sits between the box and the translation.
@@ -20,12 +22,15 @@ nonisolated struct OverlayPlacement: Equatable {
         let above = box.minY - Self.margin - top
         if below >= Self.comfortableHeight || (below >= above && below >= Self.comfortableHeight / 2) {
             frame = CGRect(x: Self.margin, y: box.maxY + gap, width: width, height: below)
+            coversBox = false
         } else if above >= Self.comfortableHeight / 2 {
             frame = CGRect(x: Self.margin, y: top, width: width, height: above)
+            coversBox = false
         } else {
             // The box fills the picture: cover its lower end.
             let height = min(Self.comfortableHeight * 1.5, max(0, end - top))
             frame = CGRect(x: Self.margin, y: end - height, width: width, height: height)
+            coversBox = true
         }
     }
 }

@@ -1,20 +1,25 @@
 import SwiftUI
 
-/// The translation, on the picture and next to the box.
+/// Translation with its actions. Takes only the height it needs, or all of it when `fills` is on.
 struct TranslationOverlay: View {
     let viewModel: CameraViewModel
+    var fills = false
     @State private var didCopy = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            ViewThatFits(in: .vertical) {
-                content
+            if fills {
                 ScrollView { content }
+            } else {
+                ViewThatFits(in: .vertical) {
+                    content
+                    ScrollView { content }
+                }
             }
             if !viewModel.translatedText.isEmpty { actions }
         }
         .background(Color.appSurface.opacity(0.94), in: .rect(cornerRadius: AppRadius.medium))
-        .overlay { RoundedRectangle(cornerRadius: AppRadius.medium).strokeBorder(Color.appOutline, lineWidth: 1) }
+        .dashedOutline(Color.appTextSecondary.opacity(0.5), radius: AppRadius.medium)
         .onChange(of: viewModel.translatedText) { didCopy = false }
     }
 
@@ -23,7 +28,7 @@ struct TranslationOverlay: View {
             if let error = viewModel.translationError {
                 InlineErrorView(error: error, retry: viewModel.retryTranslation)
             }
-            ForEach(viewModel.items) { item in
+            ForEach(viewModel.displayed) { item in
                 TranslatedTextRow(
                     original: item.original, translation: item.translation,
                     showsOriginal: viewModel.current.reading.showsOriginal,
@@ -45,6 +50,12 @@ struct TranslationOverlay: View {
                 viewModel.isSpeaking ? .overlayStopSpeaking : .overlaySpeak,
                 icon: viewModel.isSpeaking ? "stop.circle" : "speaker.wave.2", run: viewModel.toggleSpeaking
             )
+            if let shared = viewModel.shared {
+                ShareTranslationMenu(shared: shared) {
+                    symbol(.resultShare, icon: "square.and.arrow.up")
+                }
+                .buttonStyle(.plain)
+            }
             Spacer(minLength: 0)
             action(.liveClear, icon: "xmark", run: viewModel.clearResult)
         }
@@ -54,14 +65,18 @@ struct TranslationOverlay: View {
     private func action(
         _ title: LocalizedStringResource, icon: String, run: @escaping () -> Void
     ) -> some View {
-        AppButton(title, icon: icon, action: run)
+        Button(action: run) { symbol(title, icon: icon) }
+            .buttonStyle(.plain)
+    }
+
+    private func symbol(_ title: LocalizedStringResource, icon: String) -> some View {
+        AppLabel(title, icon: icon)
             .labelStyle(.iconOnly)
             .font(.subheadline.weight(.semibold))
             .foregroundStyle(Color.appAccent)
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .frame(width: 44, height: 40)
             .contentShape(.rect)
-            .buttonStyle(.plain)
     }
 }
 

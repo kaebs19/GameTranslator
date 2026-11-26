@@ -13,8 +13,11 @@ struct PrivacyPolicyView: View {
         Topic(title: .privacyCameraTitle, text: .privacyCameraText),
         Topic(title: .privacyBroadcastTitle, text: .privacyBroadcastText),
         Topic(title: .privacyTextTitle, text: .privacyTextText),
+        Topic(title: .privacyServerTitle, text: .privacyServerText),
         Topic(title: .privacyCloudTitle, text: .privacyCloudText),
+        Topic(title: .privacyTvTitle, text: .privacyTvText),
         Topic(title: .privacyAppleTitle, text: .privacyAppleText),
+        Topic(title: .privacyContactTitle, text: .privacyContactText),
         Topic(title: .privacyControlTitle, text: .privacyControlText)
     ]
 

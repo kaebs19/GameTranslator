@@ -58,7 +58,16 @@ struct TranslationResultView: View {
             Task { await viewModel.save() }
         }
         .disabled(viewModel.saveState != .ready)
-        ShareLink(item: image, preview: SharePreview(Text(.resultImageLabel), image: image)) {
+        Menu {
+            ShareLink(item: image, preview: SharePreview(Text(.resultImageLabel), image: image)) {
+                AppLabel(.resultImageLabel, icon: "photo")
+            }
+            if let shared = viewModel.result.shared {
+                ShareLink(item: shared.text) {
+                    AppLabel(.shareAsText, icon: "text.alignright")
+                }
+            }
+        } label: {
             AppLabel(.resultShare, icon: "square.and.arrow.up", isWide: true)
         }
     }

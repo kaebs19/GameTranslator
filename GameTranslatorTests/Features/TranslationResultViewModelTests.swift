@@ -8,7 +8,7 @@ struct TranslationResultViewModelTests {
         let image = try #require(TestImage.make(lines: ["x"]))
         return TranslationResult(image: UIImage(cgImage: image), rows: [
             .init(id: UUID(), original: "Go", translation: "اذهب"), .init(id: UUID(), original: "Stop", translation: nil)
-        ])
+        ], pair: LanguagePair(source: "en", target: "ar"))
     }
 
     @Test func savesOnce() async throws {
@@ -28,6 +28,10 @@ struct TranslationResultViewModelTests {
         #expect(viewModel.saveState == .ready)
         await viewModel.save()
         #expect(viewModel.saveState == .saved)
+    }
+
+    @Test func sharesOnlyWhatWasTranslated() throws {
+        #expect(try makeResult().shared?.text == "اذهب\nGo")
     }
 
     @Test func translatedTextSkipsUntranslatedRows() throws {

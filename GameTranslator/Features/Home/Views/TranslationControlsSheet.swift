@@ -20,6 +20,7 @@ struct TranslationControlsSheet: View {
                     languages
                     mode
                     speed
+                    boxPlace
                     display
                     history
                 }
@@ -167,6 +168,13 @@ struct TranslationControlsSheet: View {
         }
     }
 
+    private var boxPlace: some View {
+        Panel(title: .controlsBox, note: .controlsBoxNote) {
+            BoxPresetBar()
+                .padding(AppSpacing.medium)
+        }
+    }
+
     private var display: some View {
         Panel(title: .controlsDisplay) {
             VStack(alignment: .leading, spacing: AppSpacing.regular) {
@@ -180,19 +188,13 @@ struct TranslationControlsSheet: View {
             }
             .padding(AppSpacing.regular)
             PanelDivider()
-            Toggle(isOn: $viewModel.settings.reading.showsOriginal) {
-                PanelToggleLabel(icon: "textformat", tint: .appAccent, title: .controlsShowsOriginal)
-            }
-            .modifier(PanelToggleStyle())
+            PanelToggle(icon: "textformat", tint: .appAccent, title: .controlsShowsOriginal, isOn: $viewModel.settings.reading.showsOriginal)
         }
     }
 
     private var history: some View {
         Panel(title: .historyTitle, note: .controlsSavesHistoryFooter) {
-            Toggle(isOn: $viewModel.settings.reading.savesHistory) {
-                PanelToggleLabel(icon: "clock.arrow.circlepath", tint: .appSuccess, title: .controlsSavesHistory)
-            }
-            .modifier(PanelToggleStyle())
+            PanelToggle(icon: "clock.arrow.circlepath", tint: .appSuccess, title: .controlsSavesHistory, isOn: $viewModel.settings.reading.savesHistory)
         }
     }
 
@@ -204,30 +206,6 @@ struct TranslationControlsSheet: View {
     }
 
     private func name(_ language: AppLanguage) -> String { language.displayName(in: locale) }
-}
-
-private struct PanelToggleLabel: View {
-    let icon: String
-    let tint: Color
-    let title: LocalizedStringResource
-
-    var body: some View {
-        HStack(spacing: AppSpacing.medium) {
-            IconTile(icon: icon, tint: tint)
-            Text(title)
-                .font(.body.weight(.medium))
-                .foregroundStyle(Color.appTextPrimary)
-        }
-    }
-}
-
-private struct PanelToggleStyle: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .tint(AppPalette.brandViolet.color)
-            .padding(.horizontal, AppSpacing.regular)
-            .frame(minHeight: 60)
-    }
 }
 
 extension ReadingSettings.TextSize: SegmentOption {

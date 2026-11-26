@@ -7,6 +7,7 @@ struct RootView: View {
     private let dependencies: AppDependencies
     @State private var instant: InstantTranslateViewModel
     @State private var camera: CameraViewModel
+    @State private var tv: TVViewModel
     @Environment(\.scenePhase) private var scenePhase
     @State private var selection = AppTab.home
     @State private var sheet: HomeSheet?
@@ -20,6 +21,7 @@ struct RootView: View {
         self.dependencies = dependencies
         _instant = State(initialValue: dependencies.makeInstantTranslateViewModel())
         _camera = State(initialValue: dependencies.makeCameraViewModel())
+        _tv = State(initialValue: dependencies.makeTVViewModel())
         _showsSplash = State(initialValue: dependencies.router.request == nil)
     }
 
@@ -54,7 +56,9 @@ struct RootView: View {
         .onOpenURL { if $0 == LiveActivityLink.url { dependencies.router.open(.live) } }
         .translationHost(dependencies.translationService)
         .task { live.startObserving() }
-        .onChange(of: scenePhase) { _, phase in
+        .onChange(of: scenePhase, initial: true) { _, phase in
+            // Inactive still shows views: alerts and Control Center cause it.
+            dependencies.tvLink.appDidChange(isOpen: phase != .background)
             if phase == .active { live.appDidBecomeActive() }
         }
     }
@@ -82,7 +86,8 @@ struct RootView: View {
                 .toolbar(.hidden, for: .tabBar)
             }
             Tab(value: AppTab.tv) {
-                TVScreen()
+                TVScreen(viewModel: tv, isActive: selection == .tv && !isCovered)
+                    .id(language)
                     .toolbar(.hidden, for: .tabBar)
             }
             Tab(value: AppTab.connect) {

@@ -21,6 +21,12 @@ nonisolated struct UserDefaultsSettingsStore: SettingsStoring {
         static let savesHistory = "reading.savesHistory"
         static let usesCloudTranslation = "usesCloudTranslation"
         static let lineCount = "live.lineCount"
+        static let sendsToTV = "tv.isEnabled"
+        static let tvPosition = "tv.position"
+        static let tvTextSize = "tv.textSize"
+        static let tvShowsOriginal = "tv.showsOriginal"
+        static let usesServer = "server.isEnabled"
+        static let serverStyle = "server.style"
     }
 
     private let defaults: UserDefaults
@@ -58,6 +64,18 @@ nonisolated struct UserDefaultsSettingsStore: SettingsStoring {
             settings.reading.textSize = value
         }
         if let value = defaults.object(forKey: Key.usesCloudTranslation) as? Bool { settings.usesCloudTranslation = value }
+        if let value = defaults.object(forKey: Key.sendsToTV) as? Bool { settings.tv.isEnabled = value }
+        if let value = defaults.object(forKey: Key.tvShowsOriginal) as? Bool { settings.tv.showsOriginal = value }
+        if let value = defaults.string(forKey: Key.tvPosition).flatMap(TVSettings.Position.init) {
+            settings.tv.position = value
+        }
+        if let value = defaults.string(forKey: Key.tvTextSize).flatMap(ReadingSettings.TextSize.init) {
+            settings.tv.textSize = value
+        }
+        if let value = defaults.object(forKey: Key.usesServer) as? Bool { settings.server.isEnabled = value }
+        if let value = defaults.string(forKey: Key.serverStyle).flatMap(ServerSettings.Style.init) {
+            settings.server.style = value
+        }
         return settings
     }
 
@@ -75,5 +93,11 @@ nonisolated struct UserDefaultsSettingsStore: SettingsStoring {
         defaults.set(settings.reading.textSize.rawValue, forKey: Key.textSize)
         defaults.set(settings.usesCloudTranslation, forKey: Key.usesCloudTranslation)
         defaults.set(settings.live.lineCount, forKey: Key.lineCount)
+        defaults.set(settings.tv.isEnabled, forKey: Key.sendsToTV)
+        defaults.set(settings.tv.position.rawValue, forKey: Key.tvPosition)
+        defaults.set(settings.tv.textSize.rawValue, forKey: Key.tvTextSize)
+        defaults.set(settings.tv.showsOriginal, forKey: Key.tvShowsOriginal)
+        defaults.set(settings.server.isEnabled, forKey: Key.usesServer)
+        defaults.set(settings.server.style.rawValue, forKey: Key.serverStyle)
     }
 }

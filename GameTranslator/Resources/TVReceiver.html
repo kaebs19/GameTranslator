@@ -1,0 +1,386 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Game Translator TV</title>
+<!-- Shown by the iPhone app in any browser, and packaged for TVs in TVApps/.
+     Old TVs run it, so plain ES5 and no flex gap. All text goes in through textContent. -->
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  body { background: #0a1020; color: #f4f6ff; font-family: -apple-system, "SamsungOne", "LG Smart UI", Roboto, sans-serif; }
+  body.over-input { background: transparent; }
+  .screen { display: none; position: absolute; left: 0; top: 0; width: 100%; height: 100%; text-align: center; }
+  .screen.on { display: block; }
+  .middle { position: absolute; left: 0; right: 0; top: 50%; -webkit-transform: translateY(-50%); transform: translateY(-50%); padding: 0 4vw; }
+  h1 { font-size: 4vmin; font-size: calc(1.4rem + 2vmin); margin-bottom: 1.5vmin; }
+  p { font-size: calc(.9rem + 1vmin); color: #a7b1cf; line-height: 1.6; }
+  #digits { direction: ltr; font-size: calc(1.6rem + 3vmin); font-weight: 700; letter-spacing: .12em; min-height: 1.6em; margin: 2vmin 0; color: #9a8cff; }
+  #message { min-height: 1.8em; color: #fbbf24; }
+  .keys { direction: ltr; width: 46vmin; min-width: 260px; margin: 2vmin auto 0; }
+  button { font: inherit; font-size: calc(1rem + 1.4vmin); color: #f4f6ff; background: #1d2743; border: 3px solid transparent; border-radius: 14px; cursor: pointer; }
+  .keys button { width: 30%; margin: 1%; height: 8.5vmin; min-height: 52px; vertical-align: top; white-space: nowrap; overflow: hidden; }
+  .keys .delete { font-size: calc(.7rem + .9vmin); }
+  .list button { display: block; width: 60vmin; min-width: 260px; max-width: 90vw; margin: 1.4vmin auto; padding: 1.8vmin; }
+  button:focus, button.focus { outline: none; border-color: #9a8cff; background: #3d63f5; }
+  #lines { position: absolute; left: 6vw; right: 6vw; text-align: center; pointer-events: none; }
+  #lines.top { top: 5vh; } #lines.bottom { bottom: 6vh; }
+  #lines .box { display: inline-block; max-width: 100%; padding: .35em .8em; border-radius: .4em; background: rgba(10,16,32,.86); }
+  #lines .text { font-weight: 600; line-height: 1.45; }
+  #lines .original { font-size: .62em; color: #a7b1cf; line-height: 1.4; }
+  .small { font-size: calc(.9rem + 1.5vmin); } .medium { font-size: calc(1.1rem + 2.3vmin); } .large { font-size: calc(1.4rem + 3.4vmin); }
+  #state { position: absolute; left: 3vw; bottom: 3vh; font-size: calc(.75rem + .8vmin); padding: .3em .8em; border-radius: 1em; background: rgba(10,16,32,.86); color: #fbbf24; display: none; }
+  #state.on { display: block; }
+  #input { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="input"></div>
+<div id="pair" class="screen">
+  <div class="middle">
+    <h1 id="pair-title"></h1><p id="pair-help"></p>
+    <div id="digits"></div><p id="message"></p>
+    <div class="keys" id="keys"></div>
+  </div>
+</div>
+<div id="menu" class="screen"><div class="middle"><h1 id="menu-title"></h1><div class="list" id="menu-list"></div></div></div>
+<div id="play" class="screen"><div id="lines"></div><div id="state"></div></div>
+<!-- Sets window.TVPlatform in the packaged TV apps; empty in a browser. -->
+<script src="platform.js"></script>
+<script>
+(function () {
+  'use strict';
+  var PORT = 8787, PIN_LENGTH = 4, SILENCE = 12000, RETRY = 3000;
+  var platform = window.TVPlatform || null;
+  var isArabic = !/^en/i.test(navigator.language || 'ar');
+  var T = isArabic ? {
+    title: 'مترجم الألعاب', helpFull: 'افتح «التلفزيون» في تطبيق الهاتف واكتب رمز الاقتران كاملًا.',
+    helpPin: 'افتح «التلفزيون» في تطبيق الهاتف واكتب آخر أربعة أرقام من رمز الاقتران.',
+    connecting: 'جارٍ الاتصال…', wrong: 'الرمز غير صحيح.', locked: 'محاولات كثيرة. انتظر نصف دقيقة واكتب الرمز الجديد.',
+    unreachable: 'تعذّر الوصول إلى الهاتف. تأكد من الشبكة نفسها ومن أن التطبيق مفتوح.',
+    waiting: 'بانتظار الهاتف…', input: 'أين جهاز اللعب؟', noInput: 'الترجمة فقط، دون صورة اللعبة',
+    inputFailed: 'لا يعرض هذا التلفزيون المنفذ داخل التطبيق.', menu: 'الخيارات', resume: 'متابعة',
+    change: 'تغيير المنفذ', again: 'اقتران من جديد', exit: 'خروج', del: 'مسح', connected: 'متصل. ابدأ الترجمة من الهاتف.'
+  } : {
+    title: 'Game Translator', helpFull: 'Open “TV” in the phone app and type the whole pairing code.',
+    helpPin: 'Open “TV” in the phone app and type the last four digits of the pairing code.',
+    connecting: 'Connecting…', wrong: 'That code is not right.', locked: 'Too many tries. Wait half a minute and type the new code.',
+    unreachable: 'Cannot reach the phone. Check that both use the same network and the app is open.',
+    waiting: 'Waiting for the phone…', input: 'Where is your console?', noInput: 'Translations only, without the game',
+    inputFailed: 'This TV does not show that input inside an app.', menu: 'Options', resume: 'Resume',
+    change: 'Change input', again: 'Pair again', exit: 'Exit', del: 'Delete', connected: 'Connected. Start translating on the phone.'
+  };
+  function $(id) { return document.getElementById(id); }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function store(key, value) { try { if (value === null) { localStorage.removeItem(key); } else { localStorage.setItem(key, value); } } catch (e) {} }
+
+  // MARK: Screens and focus
+
+  var current = null, focusables = [], focused = 0;
+  function show(id) {
+    var all = ['pair', 'menu', 'play'];
+    for (var i = 0; i < all.length; i++) { $(all[i]).className = 'screen' + (all[i] === id ? ' on' : ''); }
+    current = id;
+    document.body.className = (id === 'play' && input) ? 'over-input' : '';
+    focusables = id === 'play' ? [] : Array.prototype.slice.call($(id).querySelectorAll('button'));
+    focus(0);
+  }
+  function focus(index) {
+    for (var i = 0; i < focusables.length; i++) { focusables[i].className = i === index ? 'focus' : ''; }
+    focused = index;
+  }
+  function move(step) {
+    var next = focused + step;
+    if (next >= 0 && next < focusables.length) { focus(next); }
+  }
+  function button(label, action) {
+    var element = document.createElement('button');
+    element.textContent = label;
+    element.tabIndex = -1;
+    element.onclick = function () { element.blur(); action(); };
+    return element;
+  }
+
+  // MARK: Pairing
+
+  var host = null, token = null, digits = '', isBusy = false;
+  var LENGTHS = { 1: 5, 2: 7, 3: 8, 4: 10 };
+  var BASES = { 1: 0xC0A80000, 2: 0xAC100000, 3: 0x0A000000, 4: 0 };
+  var LIMITS = { 1: 0x10000, 2: 0x100000, 3: 0x1000000, 4: 0x100000000 };
+
+  /// Same rules as PairingCode.swift.
+  function decode(code) {
+    var kind = code.charAt(0), count = LENGTHS[kind];
+    if (!count || code.length !== 1 + count + PIN_LENGTH) { return null; }
+    var part = parseInt(code.substr(1, count), 10);
+    if (!(part < LIMITS[kind])) { return null; }
+    var value = BASES[kind] + part, bytes = [];
+    for (var i = 3; i >= 0; i--) { bytes.push(Math.floor(value / Math.pow(256, i)) % 256); }
+    return { host: bytes.join('.') + ':' + PORT, pin: code.slice(-PIN_LENGTH) };
+  }
+  window.decodePairingCode = decode;
+
+  function fullLength() {
+    if (!platform) { return PIN_LENGTH; }
+    var count = LENGTHS[digits.charAt(0)];
+    return count ? 1 + count + PIN_LENGTH : 15;
+  }
+  function drawDigits() {
+    var text = digits;
+    while (text.length < fullLength() && text.length < 10) { text += '–'; }
+    $('digits').textContent = text;
+  }
+  function addDigit(digit) {
+    if (isBusy) { return; }
+    if (digits === '') { $('message').textContent = ''; }
+    if (platform && digits === '' && !LENGTHS[digit]) { return; }
+    digits += digit;
+    drawDigits();
+    if (digits.length === fullLength()) { submit(); }
+  }
+  function deleteDigit() { if (!isBusy) { digits = digits.slice(0, -1); drawDigits(); } }
+
+  function failPairing(message) {
+    isBusy = false;
+    digits = '';
+    $('message').textContent = message;
+    drawDigits();
+  }
+  function submit() {
+    var target = platform ? decode(digits) : { host: location.host, pin: digits };
+    if (!target) { return failPairing(T.wrong); }
+    isBusy = true;
+    $('message').textContent = T.connecting;
+    var request = new XMLHttpRequest();
+    request.open('POST', 'http://' + target.host + '/pair');
+    request.timeout = 6000;
+    // A plain type avoids a preflight request.
+    request.setRequestHeader('Content-Type', 'text/plain');
+    request.onload = function () {
+      if (request.status === 200) {
+        var answer = null;
+        try { answer = JSON.parse(request.responseText).token; } catch (e) {}
+        if (!answer) { return failPairing(T.unreachable); }
+        isBusy = false;
+        digits = '';
+        host = target.host;
+        token = answer;
+        store('host', host);
+        store('token', token);
+        afterPairing();
+      } else {
+        failPairing(request.status === 429 ? T.locked : T.wrong);
+      }
+    };
+    request.onerror = request.ontimeout = function () { failPairing(T.unreachable); };
+    request.send(JSON.stringify({ pin: target.pin, name: platform ? platform.name : deviceName() }));
+  }
+  function deviceName() {
+    var agent = navigator.userAgent;
+    return /iPad|Tablet/.test(agent) ? 'Tablet' : /TV|Tizen|Web0S|webOS/i.test(agent) ? 'TV' : 'Browser';
+  }
+  function startPairing() {
+    disconnect();
+    leaveInput();
+    token = null;
+    store('token', null);
+    digits = '';
+    $('message').textContent = '';
+    drawDigits();
+    show('pair');
+  }
+
+  // MARK: Game input (packaged apps only)
+
+  var input = null;
+  function leaveInput() {
+    if (input && platform) { platform.hideInput(); }
+    input = null;
+  }
+  function afterPairing() {
+    if (!platform) { return startPlaying(); }
+    platform.inputs(function (list) {
+      var saved = load('input');
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].id === saved) { return openInput(list[i]); }
+      }
+      chooseInput(list);
+    });
+  }
+  function chooseInput(list, note) {
+    leaveInput();
+    var items = [];
+    for (var i = 0; i < list.length; i++) { items.push(inputItem(list[i])); }
+    items.push([T.noInput, function () { store('input', null); startPlaying(); }]);
+    showMenu(note || T.input, items);
+  }
+  function inputItem(item) { return [item.label, function () { openInput(item); }]; }
+  function openInput(item) {
+    platform.showInput(item, function () {
+      input = item;
+      store('input', item.id);
+      startPlaying();
+    }, function () {
+      store('input', null);
+      platform.inputs(function (list) { chooseInput(list, T.inputFailed); });
+    });
+  }
+
+  function showMenu(title, items) {
+    $('menu-title').textContent = title;
+    var list = $('menu-list');
+    list.textContent = '';
+    for (var i = 0; i < items.length; i++) { list.appendChild(button(items[i][0], items[i][1])); }
+    show('menu');
+  }
+  function openMenu() {
+    var items = [[T.resume, function () { show('play'); }]];
+    if (platform) { items.push([T.change, function () { platform.inputs(chooseInput); }]); }
+    items.push([T.again, startPairing]);
+    if (platform) { items.push([T.exit, platform.exit]); }
+    showMenu(T.menu, items);
+  }
+
+  // MARK: Translations
+
+  var source = null, lastHeard = 0, watchdog = null, retry = null, noteTimer = null;
+
+  function startPlaying() {
+    show('play');
+    connect();
+  }
+  function connect() {
+    disconnect();
+    lastHeard = Date.now();
+    note(T.waiting);
+    source = new EventSource('http://' + host + '/events?token=' + encodeURIComponent(token));
+    var mine = source;
+    mine.onopen = function () { lastHeard = Date.now(); note(T.connected, 4000); };
+    mine.onmessage = function (event) {
+      if (mine !== source) { return; }
+      lastHeard = Date.now();
+      var message = null;
+      try { message = JSON.parse(event.data); } catch (e) { return; }
+      if (message.lines) { draw(message); }
+    };
+    mine.onerror = function () {
+      if (mine !== source) { return; }
+      clear();
+      note(T.waiting);
+      // A closed source will not try again: either the phone refused us or it is gone.
+      if (mine.readyState === 2) { checkToken(); }
+    };
+    watchdog = setInterval(function () {
+      if (Date.now() - lastHeard > SILENCE) { clear(); connect(); }
+    }, 2000);
+  }
+  function disconnect() {
+    if (source) { source.close(); }
+    source = null;
+    clearInterval(watchdog);
+    clearTimeout(retry);
+    clear();
+  }
+  function checkToken() {
+    disconnect();
+    note(T.waiting);
+    var request = new XMLHttpRequest(), isDone = false;
+    function again() { if (!isDone) { isDone = true; retry = setTimeout(connect, RETRY); } }
+    request.open('GET', 'http://' + host + '/events?token=' + encodeURIComponent(token));
+    request.onreadystatechange = function () {
+      if (request.readyState < 2 || isDone) { return; }
+      var status = request.status;
+      if (status === 401) { isDone = true; request.abort(); return startPairing(); }
+      again();
+      // The answer to a good token never ends.
+      request.abort();
+    };
+    request.onerror = again;
+    request.send();
+  }
+  function note(text, duration) {
+    clearTimeout(noteTimer);
+    $('state').textContent = text;
+    $('state').className = 'on';
+    if (duration) { noteTimer = setTimeout(function () { $('state').className = ''; }, duration); }
+  }
+  function clear() { $('lines').textContent = ''; }
+  function draw(message) {
+    clear();
+    if (!message.lines.length) { return; }
+    var box = document.createElement('div');
+    box.className = 'box';
+    box.dir = message.isRTL ? 'rtl' : 'ltr';
+    for (var i = 0; i < message.lines.length; i++) {
+      box.appendChild(line('text', message.lines[i].text));
+      if (message.lines[i].original) { box.appendChild(line('original', message.lines[i].original)); }
+    }
+    $('lines').className = (message.position === 'bottom' ? 'bottom ' : 'top ') + (/^(small|large)$/.test(message.size) ? message.size : 'medium');
+    $('lines').appendChild(box);
+  }
+  function line(name, text) {
+    var element = document.createElement('div');
+    element.className = name;
+    element.dir = 'auto';
+    element.textContent = text;
+    return element;
+  }
+
+  // MARK: Remote
+
+  function goBack() {
+    if (current === 'play') { return openMenu(); }
+    if (current === 'pair' && digits !== '') { return deleteDigit(); }
+    if (current === 'menu' && token && source) { return show('play'); }
+    if (platform) { platform.exit(); }
+  }
+  document.addEventListener('keydown', function (event) {
+    var code = event.keyCode, row = current === 'pair' ? 3 : 1;
+    if (code >= 96 && code <= 105) { code -= 48; }
+    if (code >= 48 && code <= 57) { if (current === 'pair') { addDigit(String(code - 48)); } }
+    else if (code === 37) { move(current === 'pair' ? -1 : 0); }
+    else if (code === 39) { move(current === 'pair' ? 1 : 0); }
+    else if (code === 38) { move(-row); }
+    else if (code === 40) { move(row); }
+    else if (code === 13) {
+      if (current === 'play') { openMenu(); } else if (focusables[focused]) { focusables[focused].onclick(); }
+    }
+    else if (code === 8) { if (current === 'pair') { deleteDigit(); } else { goBack(); } }
+    // Back on Samsung, LG and a keyboard.
+    else if (code === 10009 || code === 461 || code === 27) { goBack(); }
+    else { return; }
+    event.preventDefault();
+  });
+  $('play').onclick = openMenu;
+
+  // MARK: Start
+
+  document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+  $('pair-title').textContent = T.title;
+  $('pair-help').textContent = platform ? T.helpFull : T.helpPin;
+  var keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
+  for (var i = 0; i < keys.length; i++) { addKey(keys[i]); }
+  // A span, because focusing a key replaces its class.
+  function deleteLabel() {
+    var label = document.createElement('span');
+    label.className = 'delete';
+    label.textContent = T.del;
+    return label;
+  }
+  function addKey(key) {
+    var element = button(key === '⌫' ? T.del : key, function () {
+      if (key === '⌫') { deleteDigit(); } else if (key) { addDigit(key); }
+    });
+    if (key === '⌫') { element.textContent = ''; element.appendChild(deleteLabel()); }
+    if (!key) { element.style.visibility = 'hidden'; }
+    $('keys').appendChild(element);
+  }
+  if (platform) { platform.start(); }
+  host = platform ? load('host') : location.host;
+  token = load('token');
+  if (host && token) { afterPairing(); } else { startPairing(); }
+})();
+</script>
+</body>
+</html>

@@ -800,6 +800,40 @@
         }
       }
     },
+    "controls.box" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مكان المربع"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Box Position"
+          }
+        }
+      }
+    },
+    "controls.box_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر مكان النص المعتاد في لعبتك. ويمكنك ضبطه بيدك من «تعديل المربع» في الرئيسية."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose where your game usually shows text. You can also adjust it with Edit Box on Home."
+          }
+        }
+      }
+    },
     "controls.continuous" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1276,6 +1310,23 @@
         }
       }
     },
+    "error.no_local_network" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اتصل بشبكة Wi‑Fi أولًا، ثم حاول مجددًا."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect to Wi‑Fi first, then try again."
+          }
+        }
+      }
+    },
     "error.no_screenshot" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1459,6 +1510,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open the app to finish translating."
+          }
+        }
+      }
+    },
+    "error.tv_server_failed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذّر بدء الاتصال بالتلفزيون. حاول مجددًا."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not start the TV connection. Try again."
           }
         }
       }
@@ -2993,6 +3061,57 @@
         }
       }
     },
+    "placeholder.aim" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ضع النص داخل المربع"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Put the text inside the box"
+          }
+        }
+      }
+    },
+    "placeholder.start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ضع النص داخل المربع، ثم اضغط زر التشغيل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Put the text inside the box, then tap play"
+          }
+        }
+      }
+    },
+    "placeholder.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ستظهر الترجمة هنا"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The translation appears here"
+          }
+        }
+      }
+    },
     "preset.dialog" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3197,19 +3316,53 @@
         }
       }
     },
+    "privacy.contact.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إذا راسلتنا من صفحة «اتصل بنا» في موقعنا، نحفظ رسالتك والاسم والبريد إن كتبتهما، لنقرأها ونرد عليك فقط. لا نشاركها مع أحد، ونحذفها عند طلبك."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you write to us through the contact page on our website, we keep your message and the name and email you choose to give, only to read it and reply. We do not share it, and we delete it when you ask."
+          }
+        }
+      }
+    },
+    "privacy.contact.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رسائل التواصل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contact Messages"
+          }
+        }
+      }
+    },
     "privacy.control.text" : {
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يمكنك سحب أذونات الصور والكاميرا والإشعارات من إعدادات iPhone، ومسح الترجمات من إعدادات التطبيق. حذف التطبيق يحذف ملفاته. أوقف الترجمة السحابية قبل الحذف لإزالة المفتاح."
+            "value" : "يمكنك سحب أذونات الصور والكاميرا والإشعارات من إعدادات iPhone، ومسح الترجمات من إعدادات التطبيق. حذف التطبيق يحذف ملفاته. أوقف الترجمة السحابية وأزل التلفزيونات قبل الحذف لإزالة المفتاح ورموزها."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can withdraw Photos, camera and notification permission in iPhone Settings and clear translations in the app's settings. Deleting the app deletes its files. Turn off cloud translation first to remove the key."
+            "value" : "You can withdraw Photos, camera and notification permission in iPhone Settings and clear translations in the app's settings. Deleting the app deletes its files. Turn off cloud translation and remove TVs first to delete the key and their tokens."
           }
         }
       }
@@ -3265,19 +3418,53 @@
         }
       }
     },
+    "privacy.server.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متوقفة افتراضيًا. إذا فعّلتها، يُرسل النص المقروء من وضع الكاميرا إلى خادم SubGG ليترجمه نموذج لغوي، وتُحفظ الترجمة في كاش مشترك لتُعاد لكل المستخدمين. لا تُرسل الصور، ولا يُربط النص باسمك: يستخدم التطبيق رمز جهاز مجهول. قد يستعين الخادم بمزوّد ذكاء اصطناعي خارجي لترجمة النص."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off by default. If you turn it on, text read in camera mode is sent to the SubGG server to be translated by a language model, and the translation is kept in a shared cache reused for all users. Images are never sent and text is not linked to you: the app uses an anonymous device token. The server may use an outside AI provider to translate the text."
+          }
+        }
+      }
+    },
+    "privacy.server.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الترجمة المحسّنة (اختيارية)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enhanced Translation (Optional)"
+          }
+        }
+      }
+    },
     "privacy.summary.text" : {
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "لا نجمع أي بيانات عنك. لا يوجد حساب ولا إعلانات ولا تحليلات ولا خادم خاص بنا."
+            "value" : "لا نجمع أي بيانات عنك. لا يوجد حساب ولا إعلانات ولا تحليلات. كل شيء يجري على جهازك، إلا إذا فعّلت الترجمة المحسّنة، فيُرسل النص المقروء وحده إلى خادمنا."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "We collect no data about you. There is no account, advertising, analytics or server of ours."
+            "value" : "We collect no data about you. There is no account, advertising or analytics. Everything happens on your device, unless you turn on enhanced translation, which sends only the text read to our server."
           }
         }
       }
@@ -3346,6 +3533,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privacy Policy"
+          }
+        }
+      }
+    },
+    "privacy.tv.text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متوقف افتراضيًا. إذا فعّلته، يُرسل النص المترجم، والأصلي إن اخترت ذلك، إلى التلفزيونات التي اقترنت بها فقط، مباشرة داخل شبكتك المحلية ودون تشفير، ودون المرور بالإنترنت. لا تُرسل الصور. تُحفظ أسماء التلفزيونات ورموزها في Keychain، ويمكنك إزالتها من شاشة التلفزيون."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off by default. If you turn it on, translated text, and the original if you choose, is sent only to TVs you paired, directly inside your local network and unencrypted, without passing through the internet. Images are never sent. TV names and tokens are stored in the Keychain; you can remove them on the TV screen."
+          }
+        }
+      }
+    },
+    "privacy.tv.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "العرض على التلفزيون (اختياري)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TV Display (Optional)"
           }
         }
       }
@@ -3567,6 +3788,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Share"
+          }
+        }
+      }
+    },
+    "server.footer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تظهر ترجمة الجهاز فورًا، ثم تُستبدل بترجمة أدق تفهم سياق اللعبة. يُرسل النص المقروء فقط إلى خادم SubGG، دون صور أو بيانات شخصية."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The on-device translation appears at once, then a more accurate one that understands the game replaces it. Only the text read is sent to the SubGG server, never images or personal data."
+          }
+        }
+      }
+    },
+    "server.style" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أسلوب العربية"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arabic style"
+          }
+        }
+      }
+    },
+    "server.style.gulf" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خليجي"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gulf"
+          }
+        }
+      }
+    },
+    "server.style.standard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فصحى"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standard"
+          }
+        }
+      }
+    },
+    "server.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ترجمة محسّنة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enhanced Translation"
+          }
+        }
+      }
+    },
+    "server.toggle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حسّن الترجمة من خادم SubGG"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Improve translations with the SubGG server"
           }
         }
       }
@@ -3877,6 +4200,40 @@
         }
       }
     },
+    "share.as_image" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاركة كصورة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share as Image"
+          }
+        }
+      }
+    },
+    "share.as_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاركة كنص"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share as Text"
+          }
+        }
+      }
+    },
     "status.move_closer" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3945,19 +4302,631 @@
         }
       }
     },
-    "tv.soon" : {
+    "tv.address" : {
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "نجهّز هذا الوضع."
+            "value" : "العنوان"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This mode is being prepared."
+            "value" : "Address"
+          }
+        }
+      }
+    },
+    "tv.code_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتبه مرة واحدة على التلفزيون. يتغير الرمز بعد كل اقتران."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type it once on the TV. The code changes after each pairing."
+          }
+        }
+      }
+    },
+    "tv.code_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رمز الاقتران"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pairing Code"
+          }
+        }
+      }
+    },
+    "tv.connected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متصل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected"
+          }
+        }
+      }
+    },
+    "tv.intro" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اقرأ الترجمة على شاشة التلفزيون فوق اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read translations on your TV, over the game."
+          }
+        }
+      }
+    },
+    "tv.kind_android" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google TV و Android TV"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google TV and Android TV"
+          }
+        }
+      }
+    },
+    "tv.kind_android_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فوق اللعبة مباشرة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Directly over the game"
+          }
+        }
+      }
+    },
+    "tv.kind_android_step1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبّت تطبيق المستقبِل على التلفزيون نفسه. الأجهزة الخارجية لا تستطيع الكتابة فوق منفذ HDMI آخر."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install the receiver app on the TV itself. External sticks and boxes cannot draw over another HDMI input."
+          }
+        }
+      }
+    },
+    "tv.kind_android_step2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتحه واسمح له بالظهور فوق التطبيقات."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open it and allow it to appear over other apps."
+          }
+        }
+      }
+    },
+    "tv.kind_android_step3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب رمز الاقتران، ثم انتقل إلى منفذ اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type the pairing code, then switch to your game's input."
+          }
+        }
+      }
+    },
+    "tv.kind_browser" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تلفزيون آخر أو جهاز لوحي"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Another TV or a Tablet"
+          }
+        }
+      }
+    },
+    "tv.kind_browser_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الترجمة في المتصفح، على شاشة كاملة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translations in a browser, full screen"
+          }
+        }
+      }
+    },
+    "tv.kind_browser_step1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح متصفح الإنترنت على الجهاز الآخر."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open a web browser on the other device."
+          }
+        }
+      }
+    },
+    "tv.kind_browser_step2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب العنوان الظاهر بالأسفل."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to the address shown below."
+          }
+        }
+      }
+    },
+    "tv.kind_browser_step3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب آخر أربعة أرقام من رمز الاقتران. لا تظهر اللعبة في المتصفح."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type the last four digits of the pairing code. The game is not shown in the browser."
+          }
+        }
+      }
+    },
+    "tv.kind_input_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يختلف الدعم بين الطرازات. إن لم تظهر صورة اللعبة فاستخدم المتصفح على شاشة ثانية."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support varies by model. If the game's picture does not appear, use a browser on a second screen."
+          }
+        }
+      }
+    },
+    "tv.kind_lg" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LG"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LG"
+          }
+        }
+      }
+    },
+    "tv.kind_lg_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يعرض منفذ اللعبة والترجمة فوقه (تجريبي)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the game's input with text on top (experimental)"
+          }
+        }
+      }
+    },
+    "tv.kind_samsung" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samsung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Samsung"
+          }
+        }
+      }
+    },
+    "tv.kind_samsung_detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يعرض منفذ اللعبة والترجمة فوقه"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shows the game's input with text on top"
+          }
+        }
+      }
+    },
+    "tv.kind_samsung_step1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبّت تطبيق المستقبِل على التلفزيون وافتحه."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install the receiver app on the TV and open it."
+          }
+        }
+      }
+    },
+    "tv.kind_samsung_step2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب رمز الاقتران."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type the pairing code."
+          }
+        }
+      }
+    },
+    "tv.kind_samsung_step3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر منفذ HDMI الموصول بجهاز اللعب، والعب من داخل التطبيق."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose the HDMI input of your console and play inside the app."
+          }
+        }
+      }
+    },
+    "tv.look_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأعلى أفضل غالبًا: إن ظهرت الترجمة داخل مربع القراءة فستقرؤها الكاميرا."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top is usually better: if the translation appears inside the reading box, the camera reads it."
+          }
+        }
+      }
+    },
+    "tv.look_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شكل الترجمة على التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "How It Looks on the TV"
+          }
+        }
+      }
+    },
+    "tv.not_connected" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير متصل"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not connected"
+          }
+        }
+      }
+    },
+    "tv.paired_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تلفزيوناتك"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your TVs"
+          }
+        }
+      }
+    },
+    "tv.position" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مكان الترجمة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Position"
+          }
+        }
+      }
+    },
+    "tv.position_bottom" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أسفل الشاشة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom"
+          }
+        }
+      }
+    },
+    "tv.position_top" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أعلى الشاشة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top"
+          }
+        }
+      }
+    },
+    "tv.remove" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إزالة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        }
+      }
+    },
+    "tv.send" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أرسل الترجمة إلى التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Translations to TV"
+          }
+        }
+      }
+    },
+    "tv.send_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الهاتف والتلفزيون على الشبكة نفسها، وأبقِ التطبيق مفتوحًا. يُرسل النص فقط، داخل شبكتك."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the same network for both, and keep the app open. Only text is sent, inside your network."
+          }
+        }
+      }
+    },
+    "tv.setup_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كيف أعدّ التلفزيون؟"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Up Your TV"
+          }
+        }
+      }
+    },
+    "tv.shows_original" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "النص الأصلي"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Original Text"
+          }
+        }
+      }
+    },
+    "tv.starting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يبدأ الاتصال…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Starting…"
+          }
+        }
+      }
+    },
+    "tv.test" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جرّب على التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test on TV"
           }
         }
       }
@@ -3975,6 +4944,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "TV"
+          }
+        }
+      }
+    },
+    "tv.waiting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بانتظار التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for a TV"
           }
         }
       }

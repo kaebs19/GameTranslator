@@ -14,6 +14,10 @@ struct HomeScreen: View {
     @AppStorage("scanBox") private var box = ScanBox.standard
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    /// Two lines of translation with their original, at any text size.
+    @ScaledMetric(relativeTo: .title3) private var panelHeight: CGFloat = 150
+
+    private static let maximumPanelHeight: CGFloat = 230
 
     var body: some View {
         layout
@@ -47,10 +51,7 @@ struct HomeScreen: View {
                 viewport
                 VStack(spacing: AppSpacing.medium) {
                     topBar
-                    // The picture is too low here to hold both the box and the translation.
-                    sideTranslation
-                    // Room for the translation matters more once there is one.
-                    if !camera.hasResult { presets }
+                    TranslationPanel(viewModel: camera)
                     HomeControls(viewModel: camera)
                 }
                 .frame(width: 330)
@@ -60,7 +61,8 @@ struct HomeScreen: View {
             VStack(spacing: AppSpacing.medium) {
                 topBar
                 viewport
-                presets
+                TranslationPanel(viewModel: camera)
+                    .frame(height: min(panelHeight, Self.maximumPanelHeight))
                 HomeControls(viewModel: camera)
             }
             .padding(.horizontal, AppSpacing.medium)
@@ -68,24 +70,10 @@ struct HomeScreen: View {
         }
     }
 
-    @ViewBuilder private var sideTranslation: some View {
-        if camera.hasResult {
-            TranslationOverlay(viewModel: camera)
-                .frame(maxHeight: .infinity, alignment: .top)
-        } else {
-            Spacer(minLength: 0)
-        }
-    }
-
     private var topBar: some View {
         HomeTopBar(
             viewModel: camera, pickedItem: $pickedItem, useLatestScreenshot: useLatestScreenshot, open: open
         )
-    }
-
-    private var presets: some View {
-        BoxPresetBar(box: $box)
-            .disabled(camera.state != .running)
     }
 
     @ViewBuilder private var viewport: some View {
@@ -99,7 +87,7 @@ struct HomeScreen: View {
         } else {
             CameraViewport(
                 viewModel: camera, box: $box, isFullScreen: $isFullScreen,
-                showsTranslation: isFullScreen || verticalSizeClass != .compact
+                showsTranslation: isFullScreen
             )
         }
     }

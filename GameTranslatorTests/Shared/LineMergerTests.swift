@@ -31,6 +31,20 @@ struct LineMergerTests {
         #expect(texts(lines) == ["I told you already, We leave at dawn"])
     }
 
+    /// A tilted phone makes the boxes overlap.
+    @Test func joinsTiltedLines() {
+        let lines = [
+            RecognizedLine(text: "The bridge is closed, so you will need to", boundingBox: CGRect(x: 0.217, y: 0.112, width: 0.538, height: 0.088)),
+            RecognizedLine(text: "take the long road through the mountains", boundingBox: CGRect(x: 0.262, y: 0.170, width: 0.443, height: 0.072))
+        ]
+        #expect(texts(lines).count == 1)
+    }
+
+    @Test(arguments: ["We could", "Then you should", "Nobody here has"])
+    func joinsAfterAnUnfinishedEnding(start: String) {
+        #expect(texts(stack([start, "Take The Car"])).count == 1)
+    }
+
     @Test func joinsThreeLines() {
         #expect(texts(stack(["This is a long sentence that", "keeps going over several lines", "until it ends."])).count == 1)
     }
@@ -91,5 +105,34 @@ struct LineMergerTests {
 
     @Test func emptyInputIsFine() {
         #expect(texts([]).isEmpty)
+    }
+}
+
+struct TextFusionTests {
+    @Test func eachWordIsDecidedByVote() {
+        let readings = [
+            "The bridge is closed torrepars, so you will need to",
+            "The bridge Is closed for repairs, so jou will need to",
+            "The bridge is closed for repairs, so you wil need to",
+        ]
+        #expect(TextFusion.fused(readings) == "The bridge is closed for repairs, so you will need to")
+    }
+
+    @Test func missingAndExtraWordsAreOutvoted() {
+        #expect(TextFusion.fused(["Follow the car", "Follow the red car", "Follow car"]) == "Follow the car")
+        #expect(TextFusion.fused(["ce the long road through", "take the long road through the mountains",
+                                  "take the long road through the mountains"])
+            == "take the long road through the mountains")
+    }
+
+    @Test func twoReadingsAreNotEnoughToVote() {
+        #expect(TextFusion.fused(["Folow the car", "Follow the car"]) == "Folow the car")
+        #expect(TextFusion.fused([]) == "")
+    }
+
+    @Test func similarityCountsWords() {
+        #expect(TextFusion.similarity("Follow the car", "follow the car.") == 1)
+        #expect(TextFusion.similarity("Follow the car", "Lose the police") < TextFusion.minimumSimilarity)
+        #expect(TextFusion.similarity("Follow the car now", "Follow the cat now") == 0.75)
     }
 }

@@ -11,17 +11,25 @@ struct CameraViewModelTests {
     private let history = StubHistory()
     private let languages = StubLanguages()
     private let speaker = StubSpeaker()
+    private let tv = StubTV()
+    private let refiner = StubRefiner()
     private let screen = Screen()
 
     private final class Screen {
         var isOn = false
     }
 
+    private let clock = Clock()
+
+    private final class Clock {
+        var now: TimeInterval = 0
+    }
+
     private func makeViewModel() -> CameraViewModel {
         CameraViewModel(
             camera: camera, translator: translator, languages: languages, speaker: speaker,
-            settings: settings, history: history, readableLanguages: [.english, AppLanguage(code: "fr")],
-            keepScreenOn: { screen.isOn = $0 }
+            settings: settings, history: history, tv: tv, refiner: refiner, readableLanguages: [.english, AppLanguage(code: "fr")],
+            keepScreenOn: { screen.isOn = $0 }, now: { [clock] in clock.now }
         )
     }
 
@@ -64,12 +72,41 @@ struct CameraViewModelTests {
         #expect(translator.requests == [["Follow the car"], ["Lose the police"]])
     }
 
-    @Test func emptyBoxClearsTheResult() async throws {
+    /// The phone has room for the last translation; the TV shows it over the game.
+    @Test func emptyBoxKeepsTheResultAndClearsTheTV() async throws {
         let viewModel = await started()
         camera.see(["Follow the car"])
-        #expect(try await eventually { !viewModel.items.isEmpty })
-        camera.see([], frames: TextStabilizer.emptyFramesToClear)
-        #expect(try await eventually { viewModel.items.isEmpty })
+        #expect(try await eventually { tv.shown == ["ar:Follow the car"] })
+        camera.see([], frames: 3)
+        #expect(try await eventually { viewModel.status == .noText })
+        #expect(tv.shown == ["ar:Follow the car"])
+        clock.now += TextStabilizer.holdTime
+        camera.see([], frames: 1)
+        #expect(try await eventually { tv.shown.isEmpty })
+        #expect(translations(viewModel) == ["ar:Follow the car"])
+        viewModel.toggleTranslating()
+        viewModel.toggleTranslating()
+        #expect(tv.shown.isEmpty)
+        camera.see(["Follow the car"])
+        #expect(try await eventually { tv.shown == ["ar:Follow the car"] })
+        #expect(translator.requests.count == 1)
+    }
+
+    @Test func lastTranslationStaysUntilTheNextIsReady() async throws {
+        let viewModel = await started()
+        camera.see(["Follow the car"])
+        #expect(try await eventually { viewModel.translatedText == "ar:Follow the car" })
+        var finish: CheckedContinuation<Void, Never>?
+        translator.translate = { texts in
+            await withCheckedContinuation { finish = $0 }
+            return Dictionary(texts.map { ($0, "ar:" + $0) }) { first, _ in first }
+        }
+        camera.see(["Lose the police"])
+        #expect(try await eventually { finish != nil })
+        #expect(viewModel.items.map(\.original) == ["Lose the police"])
+        #expect(viewModel.translatedText == "ar:Follow the car")
+        finish?.resume()
+        #expect(try await eventually { viewModel.translatedText == "ar:Lose the police" })
     }
 
     @Test func nothingIsReadUntilAsked() async throws {
@@ -434,5 +471,48 @@ struct CameraViewModelTests {
         camera.see(["Follow the car"], frames: 1)
         #expect(try await eventually { !viewModel.isTranslating })
         #expect(history.recorded.map(\.original) == ["Follow the car"])
+    }
+
+    // MARK: Server
+
+    @Test func betterTranslationReplacesTheInstantOne() async throws {
+        refiner.answer = ["Lose the police": "تخلّص من الشرطة"]
+        let viewModel = await started()
+        camera.see(["Follow the car"])
+        #expect(try await eventually { translations(viewModel) == ["ar:Follow the car"] })
+        camera.see(["Lose the police"])
+        #expect(try await eventually { translations(viewModel) == ["تخلّص من الشرطة"] })
+        #expect(tv.shown == ["تخلّص من الشرطة"])
+        // The line read before helps the server understand this one.
+        #expect(refiner.requests.last?.context == ["Follow the car"])
+    }
+
+    // MARK: Sharing
+
+    @Test func sharesWhatIsShown() async throws {
+        let viewModel = await started()
+        #expect(viewModel.shared == nil)
+        camera.see(["Follow the car"])
+        #expect(try await eventually { viewModel.shared != nil })
+        #expect(viewModel.shared?.text == "ar:Follow the car\nFollow the car")
+        change { $0.reading.showsOriginal = false }
+        viewModel.settingsDidChange()
+        #expect(viewModel.shared?.text == "ar:Follow the car")
+    }
+
+    @Test func tvShowsTranslationsAndClearsWhenPaused() async throws {
+        let viewModel = await started()
+        camera.see(["Follow the car"])
+        #expect(try await eventually { tv.shown == ["ar:Follow the car"] })
+        camera.see(["Lose the police"])
+        #expect(try await eventually { tv.shown == ["ar:Lose the police"] })
+        // The old line stayed until the new one was ready.
+        #expect(!tv.history.drop { $0.isEmpty }.contains([]))
+        viewModel.toggleTranslating()
+        #expect(tv.shown.isEmpty)
+        viewModel.toggleTranslating()
+        #expect(tv.shown == ["ar:Lose the police"])
+        viewModel.stop()
+        #expect(tv.shown.isEmpty)
     }
 }

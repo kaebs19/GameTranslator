@@ -138,7 +138,8 @@ final class InstantTranslateViewModel {
         guard let rendered = await renderer.render(image, overlays: overlays) else { throw AppError.unreadableImage }
         return TranslationResult(
             image: UIImage(cgImage: rendered),
-            rows: blocks.map { .init(id: $0.id, original: $0.text, translation: translations[$0.text]) }
+            rows: blocks.map { .init(id: $0.id, original: $0.text, translation: translations[$0.text]) },
+            pair: pair
         )
     }
 }

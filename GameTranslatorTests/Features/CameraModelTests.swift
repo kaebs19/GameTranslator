@@ -54,58 +54,100 @@ struct ScanBoxTests {
 struct TextStabilizerTests {
     @Test func waitsForTwoAgreeingFrames() {
         var stabilizer = TextStabilizer()
-        #expect(stabilizer.update(["Follow the car"]) == nil)
-        #expect(stabilizer.update(["Follow the car"]) == ["Follow the car"])
-        #expect(stabilizer.update(["Follow the car"]) == nil)
+        #expect(stabilizer.update(["Follow the car"], at: 0) == nil)
+        #expect(stabilizer.update(["Follow the car"], at: 0) == ["Follow the car"])
+        #expect(stabilizer.update(["Follow the car"], at: 0) == nil)
     }
 
     @Test func smallMisreadingsChangeNothing() {
         var stabilizer = TextStabilizer()
-        _ = stabilizer.update(["Get back to the safehouse"])
-        _ = stabilizer.update(["Get back to the safehouse"])
-        #expect(stabilizer.update(["Get back to the safehovse"]) == nil)
-        #expect(stabilizer.update(["Get back to the safehovse"]) == nil)
+        _ = stabilizer.update(["Get back to the safehouse"], at: 0)
+        _ = stabilizer.update(["Get back to the safehouse"], at: 0)
+        #expect(stabilizer.update(["Get back to the safehovse"], at: 0) == nil)
+        #expect(stabilizer.update(["Get back to the safehovse"], at: 0) == nil)
         #expect(stabilizer.current == ["Get back to the safehouse"])
     }
 
     @Test func passingGarbageIsIgnored() {
         var stabilizer = TextStabilizer()
-        #expect(stabilizer.update(["qwzx lkj"]) == nil)
-        #expect(stabilizer.update(["Follow the car"]) == nil)
-        #expect(stabilizer.update(["Follow the car"]) == ["Follow the car"])
+        #expect(stabilizer.update(["qwzx lkj"], at: 0) == nil)
+        #expect(stabilizer.update(["Follow the car"], at: 0) == nil)
+        #expect(stabilizer.update(["Follow the car"], at: 0) == ["Follow the car"])
     }
 
-    @Test func briefLossKeepsTheText() {
+    @Test func lossKeepsTheTextForAWhile() {
         var stabilizer = TextStabilizer()
-        _ = stabilizer.update(["Follow the car"])
-        _ = stabilizer.update(["Follow the car"])
-        for _ in 1..<TextStabilizer.emptyFramesToClear { #expect(stabilizer.update([]) == nil) }
-        #expect(stabilizer.update([]) == [])
+        _ = stabilizer.update(["Follow the car"], at: 0)
+        _ = stabilizer.update(["Follow the car"], at: 0)
+        #expect(stabilizer.update([], at: 10) == nil)
+        #expect(stabilizer.update([], at: 10 + TextStabilizer.holdTime - 0.1) == nil)
+        // Seen again, so the wait starts over.
+        #expect(stabilizer.update(["Follow the car"], at: 14) == nil)
+        #expect(stabilizer.update([], at: 15) == nil)
+        #expect(stabilizer.update([], at: 15 + TextStabilizer.holdTime) == [])
         #expect(stabilizer.current.isEmpty)
-        #expect(stabilizer.update([]) == nil)
+        #expect(stabilizer.update([], at: 99) == nil)
+    }
+
+    @Test func missingLineIsKeptForAWhile() {
+        var stabilizer = TextStabilizer()
+        _ = stabilizer.update(["Stats", "Settings"], at: 0)
+        _ = stabilizer.update(["Stats", "Settings"], at: 0)
+        #expect(stabilizer.update(["Stats"], at: 1) == nil)
+        #expect(stabilizer.update(["Stats"], at: 2) == nil)
+        #expect(stabilizer.current == ["Stats", "Settings"])
+        #expect(stabilizer.update(["Stats"], at: 1 + TextStabilizer.holdTime) == ["Stats"])
+    }
+
+    @Test func unsteadyLineDoesNotHoldBackTheOthers() {
+        var stabilizer = TextStabilizer()
+        #expect(stabilizer.update(["Reward offered", "must qwe be"], at: 0) == nil)
+        #expect(stabilizer.update(["Reward offered", "mxst rty bo"], at: 0) == ["Reward offered"])
+        #expect(stabilizer.update(["Reward offered", "nust uio bs"], at: 0) == nil)
+        #expect(stabilizer.isConfirmed)
     }
 
     @Test func trustedFrameIsAcceptedAtOnceAndConfirmedLater() {
         var stabilizer = TextStabilizer()
-        #expect(stabilizer.update(["Follow the car"], isTrusted: true) == ["Follow the car"])
+        #expect(stabilizer.update(["Follow the car"], isTrusted: true, at: 0) == ["Follow the car"])
         #expect(!stabilizer.isConfirmed)
-        #expect(stabilizer.update(["Follow the car"], isTrusted: true) == nil)
+        #expect(stabilizer.update(["Follow the car"], isTrusted: true, at: 0) == nil)
         #expect(stabilizer.isConfirmed)
-        #expect(stabilizer.update(["Lose the police"], isTrusted: true) == ["Lose the police"])
+        #expect(stabilizer.update(["Lose the police"], isTrusted: true, at: 0) == ["Lose the police"])
         #expect(!stabilizer.isConfirmed)
+    }
+
+    @Test func laterFramesCorrectAMisreadWord() {
+        var stabilizer = TextStabilizer()
+        _ = stabilizer.update(["Follow the truck to the warehoise"], at: 0)
+        #expect(stabilizer.update(["Follow the truck to the warehoise"], at: 0) == ["Follow the truck to the warehoise"])
+        #expect(stabilizer.update(["Follow the truck to the warehouse"], at: 0) == nil)
+        #expect(stabilizer.update(["Follow the truck to the warehouse"], at: 0) == nil)
+        // Three of five frames now read "warehouse", and two fused readings in a row say so.
+        #expect(stabilizer.update(["Follow the truck to the warehouse"], at: 0) == ["Follow the truck to the warehouse"])
+        #expect(!stabilizer.isConfirmed)
+    }
+
+    @Test func oneBadFrameIsOutvoted() {
+        var stabilizer = TextStabilizer()
+        _ = stabilizer.update(["Collect all twelve hidden packages"], at: 0)
+        _ = stabilizer.update(["Collect all twelve hidden packages"], at: 0)
+        #expect(stabilizer.update(["Collect all twelvo hidden packagas"], at: 0) == nil)
+        #expect(stabilizer.update(["Collect all twelve hidden packages"], at: 0) == nil)
+        #expect(stabilizer.current == ["Collect all twelve hidden packages"])
     }
 
     @Test func realChangeIsAccepted() {
         var stabilizer = TextStabilizer()
-        _ = stabilizer.update(["Follow the car"])
-        _ = stabilizer.update(["Follow the car"])
-        #expect(stabilizer.update(["Lose the police"]) == nil)
-        #expect(stabilizer.update(["Lose the police"]) == ["Lose the police"])
+        _ = stabilizer.update(["Follow the car"], at: 0)
+        _ = stabilizer.update(["Follow the car"], at: 0)
+        #expect(stabilizer.update(["Lose the police"], at: 0) == nil)
+        #expect(stabilizer.update(["Lose the police"], at: 0) == ["Lose the police"])
     }
 
     @Test func acceptsNothing() {
         var stabilizer = TextStabilizer()
-        #expect(stabilizer.update([]) == nil)
+        #expect(stabilizer.update([], at: 0) == nil)
     }
 }
 
@@ -180,6 +222,16 @@ struct OverlayPlacementTests {
         let frame = place(CGRect(x: 0, y: 20, width: 360, height: 490))
         #expect(frame.height >= OverlayPlacement.comfortableHeight)
         #expect(frame.maxY <= size.height)
+    }
+
+    /// The placeholder is hidden exactly when it would lie on the text.
+    @Test func coversTheBoxOnlyWhenNothingElseFits() {
+        for preset in BoxPreset.allCases {
+            let box = preset.box.frame(in: size)
+            let placement = OverlayPlacement(box: box, in: size, top: 72)
+            #expect(placement.coversBox == placement.frame.intersects(box), "\(preset)")
+        }
+        #expect(OverlayPlacement(box: CGRect(x: 0, y: 20, width: 360, height: 490), in: size, top: 72).coversBox)
     }
 
     @Test func staysClearOfControlsAtTheBottom() {

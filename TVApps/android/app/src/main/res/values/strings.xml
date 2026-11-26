@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Game Translator TV</string>
+    <string name="pair_help">Open “TV” in the phone app and type the whole pairing code.</string>
+    <string name="pair_connecting">Connecting…</string>
+    <string name="pair_wrong">That code is not right.</string>
+    <string name="pair_locked">Too many tries. Wait half a minute and type the new code.</string>
+    <string name="pair_unreachable">Cannot reach the phone. Check that both use the same network and the app is open.</string>
+    <string name="delete">Delete</string>
+    <string name="permission_help">Allow this app to appear over other apps, so translations show over your game.</string>
+    <string name="permission_button">Open Settings</string>
+    <string name="permission_manual">This TV has no such setting. Allow it once from a computer:\n%1$s</string>
+    <string name="ready_help">Switch to your game\'s input. Translations appear over it.\nIf nothing shows over HDMI, this TV does not allow it.</string>
+    <string name="state_waiting">Waiting for the phone…</string>
+    <string name="state_connected">Connected to the phone</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="test">Show a Test Line</string>
+    <string name="test_line">Translations appear here</string>
+    <string name="pair_again">Pair Again</string>
+    <string name="close">Hide This Screen</string>
+    <string name="notification">Showing translations over the picture</string>
+</resources>

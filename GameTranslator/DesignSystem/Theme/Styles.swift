@@ -42,6 +42,22 @@ struct IconButtonStyle: ButtonStyle {
     }
 }
 
+/// Icon over a picture: no background, so what is behind it stays visible.
+struct PictureIconButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .labelStyle(.iconOnly)
+            .font(.body.weight(.semibold))
+            .foregroundStyle(Color.appTextPrimary)
+            // Keeps the symbol readable on bright pictures.
+            .shadow(color: .black.opacity(0.8), radius: 3)
+            .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+            .frame(width: 44, height: 44)
+            .contentShape(.rect)
+            .opacity(configuration.isPressed ? 0.6 : 1)
+    }
+}
+
 extension ButtonStyle where Self == PrimaryButtonStyle {
     static var primary: PrimaryButtonStyle { PrimaryButtonStyle() }
 }
@@ -54,7 +70,19 @@ extension ButtonStyle where Self == IconButtonStyle {
     static var icon: IconButtonStyle { IconButtonStyle() }
 }
 
+extension ButtonStyle where Self == PictureIconButtonStyle {
+    static var pictureIcon: PictureIconButtonStyle { PictureIconButtonStyle() }
+}
+
 extension View {
+    /// Separate strokes: marks a place without closing it off.
+    func dashedOutline(_ color: Color, radius: CGFloat) -> some View {
+        overlay {
+            RoundedRectangle(cornerRadius: radius)
+                .strokeBorder(color, style: StrokeStyle(lineWidth: 1.5, dash: [6, 5]))
+        }
+    }
+
     /// Raised panel.
     func card(_ radius: CGFloat = AppRadius.large) -> some View {
         background(Color.appSurface, in: .rect(cornerRadius: radius))

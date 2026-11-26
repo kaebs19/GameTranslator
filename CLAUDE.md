@@ -44,10 +44,16 @@ No game files are modified. The app only reads what is visible on screen.
 - UI: dark only. Views use `AppPalette` / `Color.app…`, `AppGradient`, `.card()`, `.buttonStyle(.primary/.secondary/.icon)`, never raw colors. `ThemeTests` checks contrast.
 - Tabs: Home (camera + reading box), TV, Connect (guides that open existing features; no console brand names), Settings. Images, live, history and controls open over Home as `HomeSheet`.
 - Interface language (system / Arabic / English) is `InterfaceLanguageModel`, applied with `.interfaceLanguage(_:)` on the root **and inside every sheet**; navigation stacks get `.id(language)` because an existing bar keeps its direction.
-- Camera: `CameraFrameReader` sends `CameraEvent`s. A frozen picture is kept in memory only, and the image shown comes from the same frame that is read. `OverlayPlacement` keeps the translation off the box. `keepScreenOn` is on only while reading.
+- Camera: `CameraFrameReader` sends `CameraEvent`s. A frozen picture is kept in memory only, and the image shown comes from the same frame that is read. `OverlayPlacement` keeps the full-screen translation off the box. `keepScreenOn` is on only while reading.
+- The translation sits in `TranslationPanel`, a fixed-height place below the camera (beside it sideways, on the picture only in full screen): a changing height would resize the picture and move the box. Box presets live in Controls and Settings.
+- Sharing: `SharedTranslation` → `ShareTranslationMenu` (text, or a picture drawn by `ShareCard`).
 - `AppTabBar` replaces the system tab bar; each tab hides the system one.
+- `Core/TV`: `TVLink` (app state) drives `TVServer` (actor, HTTP + server-sent events, port 8787, app open only). `CameraViewModel` sends lines through `TVPresenting`. `TVPairing` holds PIN and tokens; `PairingCode` packs the phone's address and PIN into digits and is decoded the same way in `TVReceiver.html` and `PairingCode.kt`: change all three together.
+- `TVApps/`: receivers. `Resources/TVReceiver.html` is served to browsers and packaged for Samsung and LG by `TVApps/build-web.sh`; `TVApps/android` is the Kotlin overlay app. See `TVApps/README.md`.
+- Camera text goes through `TextStabilizer`, which votes each frame against the last 5 with `TextFusion` (word alignment + majority) and may correct an accepted line twice. Measured on synthetic filmed-TV frames: word errors 9–15% for one frame, about 1–2% fused.
 - `LineMerger` joins wrapped sentences before translation (images, camera, and up to 3 lines in live). It is careful on purpose: never join menu entries.
 - `Core/Camera` reads only the box on screen; `CameraPreviewView` converts it to sensor coordinates. Frames are never stored.
+- `ServerRefiner` (camera mode only, off by default, `settings.server`) sends text to the SubGG server (`SubGGClient`, anonymous device token in the Keychain) and replaces the instant translation with the server's. Debug builds use `http://localhost:8080` (simulator only), Release `https://api.subgg.app`. The server lives in `~/Projects/subgg`.
 - `CloudFallback` runs only after on-device translation failed, the user consented and entered a key. Anything claiming "nothing is uploaded" must follow `usesCloud`.
 - `PrivacyPolicyView` and `Docs/privacy-policy.html` carry the same text. Update the privacy manifests when using a new required-reason API.
 - ReplayKit broadcast is deprecated in iOS 27 (replaced by ScreenCaptureKit) but is the only option on iOS 18–26.
@@ -57,7 +63,7 @@ No game files are modified. The app only reads what is visible on screen.
 ## Conventions
 - UI strings in Arabic first (RTL support), English second. Use String Catalogs.
 - No game names, logos or trademarks in app name, icon, or metadata.
-- No analytics or network calls by default. Everything on-device unless the user enables cloud translation.
+- No analytics or network calls by default. The TV server is off by default, local only, text only. Everything on-device unless the user enables cloud translation.
 - Privacy: images and frames are never stored unless the user saves a translated image. Text and translations are kept on device in the cache and in History (added on request; can be turned off and cleared).
 - Keep functions small, add unit tests for text dedupe and line-merging logic.
 

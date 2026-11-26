@@ -18,6 +18,8 @@ nonisolated struct AppSettings: Equatable, Sendable {
     private(set) var languages: [AppLanguage]
     var live = LiveSettings()
     var reading = ReadingSettings()
+    var tv = TVSettings()
+    var server = ServerSettings()
     /// Off by default: nothing leaves the device unless the user turns this on.
     var usesCloudTranslation = false
 

@@ -93,9 +93,15 @@ private struct HistoryRow: View {
         }
         .contextMenu {
             AppButton(.historyCopy, icon: "doc.on.doc") { UIPasteboard.general.string = entry.translation }
-            ShareLink(item: "\(entry.translation)\n\(entry.original)")
+            ShareTranslationItems(shared: entry.shared)
             AppButton(.languagesRemove, icon: "trash", role: .destructive) { remove(entry) }
         }
+    }
+}
+
+private extension HistoryEntry {
+    var shared: SharedTranslation {
+        SharedTranslation(lines: [.init(original: original, translation: translation)], pair: pair)
     }
 }
 
