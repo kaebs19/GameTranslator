@@ -6,12 +6,16 @@ struct TVScreen: View {
     /// False while something covers the screen, which closes pairing.
     let isActive: Bool
     @Environment(\.locale) private var locale
+    @Environment(\.layoutDirection) private var direction
     @Environment(\.scenePhase) private var scenePhase
+    /// The step-by-step setup, open over this screen.
+    @State private var guide: TVGuide?
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: AppSpacing.large) {
+                    if viewModel.tvs.isEmpty { start }
                     power
                     if viewModel.isEnabled { connection }
                     if !viewModel.tvs.isEmpty { paired }
@@ -28,9 +32,32 @@ struct TVScreen: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .tint(Color.appAccent)
+        .sheet(item: $guide) { guide in
+            TVGuideView(viewModel: viewModel, guide: guide)
+                .environment(\.locale, locale)
+                .environment(\.layoutDirection, direction)
+                .presentationBackground(Color.appBackground)
+        }
         .onChange(of: isActive && scenePhase == .active, initial: true) { _, isVisible in
             viewModel.setVisible(isVisible)
         }
+    }
+
+    /// Nothing paired yet: the guide is the way in.
+    private var start: some View {
+        VStack(alignment: .leading, spacing: AppSpacing.medium) {
+            Text(.tvGuideStartTitle)
+                .font(.title3.bold())
+                .foregroundStyle(Color.appTextPrimary)
+            Text(.tvGuideStartText)
+                .font(.subheadline)
+                .foregroundStyle(Color.appTextSecondary)
+                .fixedSize(horizontal: false, vertical: true)
+            AppButton(.tvGuideStart, icon: "list.number", isWide: true) { guide = TVGuide() }
+                .buttonStyle(.primary)
+        }
+        .padding(AppSpacing.regular)
+        .card()
     }
 
     private var power: some View {
@@ -66,9 +93,7 @@ struct TVScreen: View {
         Panel(title: .tvSetupTitle) {
             ForEach(TVKind.allCases) { kind in
                 if kind != TVKind.allCases.first { PanelDivider() }
-                NavigationLink {
-                    TVSetupView(kind: kind, viewModel: viewModel)
-                } label: {
+                Button { guide = TVGuide(kind: kind) } label: {
                     TVKindRow(kind: kind)
                 }
                 .buttonStyle(.plain)

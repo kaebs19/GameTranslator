@@ -4370,6 +4370,737 @@
         }
       }
     },
+    "tv.guide.address_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الجهاز على شبكة الواي فاي نفسها."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The device is on the same Wi-Fi."
+          }
+        }
+      }
+    },
+    "tv.guide.address_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تظهر الترجمة على الشاشة كاملة، والمتصفح لا يعرض اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translations fill the screen; the browser does not show the game."
+          }
+        }
+      }
+    },
+    "tv.guide.address_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "على التلفزيون أو الجهاز اللوحي، افتح المتصفح واكتب:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the TV or tablet, open the browser and type:"
+          }
+        }
+      }
+    },
+    "tv.guide.address_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح الصفحة في المتصفح"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the page in a browser"
+          }
+        }
+      }
+    },
+    "tv.guide.back" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "السابق"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        }
+      }
+    },
+    "tv.guide.browser_pair_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب آخر أربعة أرقام (الملونة) في صفحة المتصفح."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type the last four (colored) digits on the browser page."
+          }
+        }
+      }
+    },
+    "tv.guide.choose_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اختر نوع التلفزيون لنعرض لك خطواته."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose your TV to see its steps."
+          }
+        }
+      }
+    },
+    "tv.guide.choose_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ما نوع تلفزيونك؟"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which TV do you have?"
+          }
+        }
+      }
+    },
+    "tv.guide.done_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح الرئيسية وشغّل القراءة، وستظهر الترجمة على التلفزيون. يبقى الربط محفوظًا للمرات القادمة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Home and start reading; translations will show on the TV. The link is kept for next time."
+          }
+        }
+      }
+    },
+    "tv.guide.done_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جاهز!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All set!"
+          }
+        }
+      }
+    },
+    "tv.guide.download_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب العنوان في الخانة واضغط Go."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type the address and select Go."
+          }
+        }
+      }
+    },
+    "tv.guide.download_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إذا طلب الإذن: اضغط الإعدادات، وفعّل «السماح من هذا المصدر»، ثم ارجع."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If asked: select Settings, turn on “Allow from this source”, then go back."
+          }
+        }
+      }
+    },
+    "tv.guide.download_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضغط تثبيت."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Install."
+          }
+        }
+      }
+    },
+    "tv.guide.download_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يظهر خيار السماح؟ ابحث عن «تثبيت التطبيقات غير المعروفة» في إعدادات التلفزيون ← التطبيقات."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No allow option? Look for “Install unknown apps” in the TV's Settings → Apps."
+          }
+        }
+      }
+    },
+    "tv.guide.download_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح Downloader واكتب هذا العنوان:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Downloader and type this address:"
+          }
+        }
+      }
+    },
+    "tv.guide.download_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نزّل تطبيق التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download the TV app"
+          }
+        }
+      }
+    },
+    "tv.guide.finish" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "tv.guide.install_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "على التلفزيون افتح Google Play."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the TV, open Google Play."
+          }
+        }
+      }
+    },
+    "tv.guide.install_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابحث عن Downloader (من AFTVnews)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search for Downloader (by AFTVnews)."
+          }
+        }
+      }
+    },
+    "tv.guide.install_3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اضغط تثبيت."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Install."
+          }
+        }
+      }
+    },
+    "tv.guide.install_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تطبيق مجاني ننزّل به تطبيق الترجمة على التلفزيون."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A free app used to download the translation app onto your TV."
+          }
+        }
+      }
+    },
+    "tv.guide.install_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ثبّت Downloader"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Downloader"
+          }
+        }
+      }
+    },
+    "tv.guide.next" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التالي"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        }
+      }
+    },
+    "tv.guide.open_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح التطبيق من قائمة التطبيقات."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the app from your apps list."
+          }
+        }
+      }
+    },
+    "tv.guide.open_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عندما يطلب، اسمح له بالظهور فوق التطبيقات."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When asked, allow it to display over other apps."
+          }
+        }
+      }
+    },
+    "tv.guide.open_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا الإذن هو ما يسمح بكتابة الترجمة فوق اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This permission is what lets the translation appear over the game."
+          }
+        }
+      }
+    },
+    "tv.guide.open_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسمه «مترجم الألعاب للتلفزيون»."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's called “Game Translator TV”."
+          }
+        }
+      }
+    },
+    "tv.guide.open_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح التطبيق على التلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the app on the TV"
+          }
+        }
+      }
+    },
+    "tv.guide.pair_note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يتصل؟ تأكد أن الجوال والتلفزيون على شبكة الواي فاي نفسها، وأنها ليست شبكة ضيوف."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not connecting? Make sure the phone and TV are on the same Wi-Fi, and it isn't a guest network."
+          }
+        }
+      }
+    },
+    "tv.guide.pair_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب الرمز كاملًا في تطبيق التلفزيون. أبقِ هذه الشاشة مفتوحة حتى يتصل."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type the full code into the TV app. Keep this screen open until it connects."
+          }
+        }
+      }
+    },
+    "tv.guide.pair_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتب رمز الاقتران"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the pairing code"
+          }
+        }
+      }
+    },
+    "tv.guide.paired" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم الربط بالتلفزيون"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected to the TV"
+          }
+        }
+      }
+    },
+    "tv.guide.soon_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نجهّز تطبيق هذا التلفزيون. حتى ذلك الحين اعرض الترجمة في متصفحه أو على جهاز لوحي بجانبك."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We're preparing the app for this TV. Meanwhile, show translations in its browser or on a tablet next to you."
+          }
+        }
+      }
+    },
+    "tv.guide.soon_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قريبًا"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coming soon"
+          }
+        }
+      }
+    },
+    "tv.guide.start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ابدأ خطوة بخطوة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start step by step"
+          }
+        }
+      }
+    },
+    "tv.guide.start_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطوات قصيرة تثبّت فيها تطبيق التلفزيون وتربطه بجوالك، لتظهر الترجمة فوق اللعبة."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A few short steps to install the TV app and link it to your phone, so translations appear over the game."
+          }
+        }
+      }
+    },
+    "tv.guide.start_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اربط تلفزيونك"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect your TV"
+          }
+        }
+      }
+    },
+    "tv.guide.step" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الخطوة %lld من %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step %lld of %lld"
+          }
+        }
+      }
+    },
+    "tv.guide.test_1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتقل على التلفزيون إلى منفذ HDMI الخاص بجهاز اللعب."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On the TV, switch to the HDMI input of your game console."
+          }
+        }
+      }
+    },
+    "tv.guide.test_2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غيّر مكان الترجمة وحجمها من شاشة التلفزيون في التطبيق."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change the position and size from the TV screen in the app."
+          }
+        }
+      }
+    },
+    "tv.guide.test_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعرض سطر تجربة لترى مكان الترجمة وحجمها."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show a test line to see where and how big the translation appears."
+          }
+        }
+      }
+    },
+    "tv.guide.test_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "جرّب الترجمة"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try it"
+          }
+        }
+      }
+    },
+    "tv.guide.use_browser" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخدم المتصفح"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use the browser"
+          }
+        }
+      }
+    },
     "tv.intro" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4421,57 +5152,6 @@
         }
       }
     },
-    "tv.kind_android_step1" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ثبّت تطبيق المستقبِل على التلفزيون نفسه. الأجهزة الخارجية لا تستطيع الكتابة فوق منفذ HDMI آخر."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Install the receiver app on the TV itself. External sticks and boxes cannot draw over another HDMI input."
-          }
-        }
-      }
-    },
-    "tv.kind_android_step2" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "افتحه واسمح له بالظهور فوق التطبيقات."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open it and allow it to appear over other apps."
-          }
-        }
-      }
-    },
-    "tv.kind_android_step3" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اكتب رمز الاقتران، ثم انتقل إلى منفذ اللعبة."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Type the pairing code, then switch to your game's input."
-          }
-        }
-      }
-    },
     "tv.kind_browser" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4502,57 +5182,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Translations in a browser, full screen"
-          }
-        }
-      }
-    },
-    "tv.kind_browser_step1" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "افتح متصفح الإنترنت على الجهاز الآخر."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open a web browser on the other device."
-          }
-        }
-      }
-    },
-    "tv.kind_browser_step2" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اكتب العنوان الظاهر بالأسفل."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Go to the address shown below."
-          }
-        }
-      }
-    },
-    "tv.kind_browser_step3" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اكتب آخر أربعة أرقام من رمز الاقتران. لا تظهر اللعبة في المتصفح."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Type the last four digits of the pairing code. The game is not shown in the browser."
           }
         }
       }
@@ -4638,57 +5267,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shows the game's input with text on top"
-          }
-        }
-      }
-    },
-    "tv.kind_samsung_step1" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ثبّت تطبيق المستقبِل على التلفزيون وافتحه."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Install the receiver app on the TV and open it."
-          }
-        }
-      }
-    },
-    "tv.kind_samsung_step2" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اكتب رمز الاقتران."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Type the pairing code."
-          }
-        }
-      }
-    },
-    "tv.kind_samsung_step3" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اختر منفذ HDMI الموصول بجهاز اللعب، والعب من داخل التطبيق."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose the HDMI input of your console and play inside the app."
           }
         }
       }
