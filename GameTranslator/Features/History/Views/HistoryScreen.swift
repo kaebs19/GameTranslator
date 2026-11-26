@@ -4,9 +4,12 @@ struct HistoryScreen: View {
     @State private var viewModel: HistoryViewModel
     @State private var confirmsClear = false
     @Environment(\.dismiss) private var dismiss
+    /// Off as a tab, where there is nothing to close.
+    private let showsDone: Bool
 
-    init(viewModel: HistoryViewModel) {
+    init(viewModel: HistoryViewModel, showsDone: Bool = true) {
         _viewModel = State(initialValue: viewModel)
+        self.showsDone = showsDone
     }
 
     var body: some View {
@@ -50,8 +53,10 @@ struct HistoryScreen: View {
     }
 
     @ToolbarContentBuilder private var toolbar: some ToolbarContent {
-        ToolbarItem(placement: .confirmationAction) {
-            AppButton(.commonDone) { dismiss() }
+        if showsDone {
+            ToolbarItem(placement: .confirmationAction) {
+                AppButton(.commonDone) { dismiss() }
+            }
         }
         if !viewModel.isEmpty {
             ToolbarItem(placement: .topBarLeading) {

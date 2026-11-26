@@ -1,7 +1,7 @@
 import PhotosUI
 import SwiftUI
 
-/// Languages and their state, then images, history and controls.
+/// Languages and their state, then images and controls.
 struct HomeTopBar: View {
     let viewModel: CameraViewModel
     @Binding var pickedItem: PhotosPickerItem?
@@ -13,7 +13,6 @@ struct HomeTopBar: View {
         HStack(spacing: AppSpacing.small * 2) {
             LanguagePill(viewModel: viewModel) { open(.controls) }
             addMenu
-            AppButton(.historyTitle, icon: "clock.arrow.circlepath") { open(.history) }
                 .buttonStyle(.icon)
             AppButton(.controlsTitle, icon: "slider.horizontal.3") { open(.controls) }
                 .buttonStyle(.icon)

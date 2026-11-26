@@ -1,37 +1,26 @@
 import SwiftUI
 
-/// Turning the TV on, pairing it, and choosing how text looks there.
-struct TVScreen: View {
+/// The TV part of My Devices: pairing, paired TVs, how text looks there.
+/// The guide opens over it as a sheet.
+struct TVSection: View {
     @Bindable var viewModel: TVViewModel
     /// False while something covers the screen, which closes pairing.
     let isActive: Bool
+    @Binding var guide: TVGuide?
     @Environment(\.locale) private var locale
     @Environment(\.layoutDirection) private var direction
     @Environment(\.scenePhase) private var scenePhase
-    /// The step-by-step setup, open over this screen.
-    @State private var guide: TVGuide?
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: AppSpacing.large) {
-                    if viewModel.tvs.isEmpty { start }
-                    power
-                    if viewModel.isEnabled { connection }
-                    if !viewModel.tvs.isEmpty { paired }
-                    setup
-                    look
-                }
-                .padding(AppSpacing.regular)
-                .frame(maxWidth: 560)
-                .frame(maxWidth: .infinity)
-                .animation(.default, value: viewModel.state)
-            }
-            .background(Color.appBackground.ignoresSafeArea())
-            .navigationTitle(Text(.tvTitle))
-            .navigationBarTitleDisplayMode(.inline)
+        VStack(spacing: AppSpacing.large) {
+            if viewModel.tvs.isEmpty { start }
+            if !viewModel.tvs.isEmpty { paired }
+            power
+            if viewModel.isEnabled { connection }
+            setup
+            look
         }
-        .tint(Color.appAccent)
+        .animation(.default, value: viewModel.state)
         .sheet(item: $guide) { guide in
             TVGuideView(viewModel: viewModel, guide: guide)
                 .environment(\.locale, locale)
@@ -83,9 +72,15 @@ struct TVScreen: View {
     private var paired: some View {
         Panel(title: .tvPairedTitle) {
             ForEach(viewModel.tvs) { tv in
-                if tv != viewModel.tvs.first { PanelDivider() }
                 PairedTVRow(tv: tv, isConnected: viewModel.isConnected(tv)) { viewModel.forget(tv) }
+                PanelDivider()
             }
+            Button { guide = TVGuide() } label: {
+                PanelRow(icon: "plus", tint: .appAccent, title: .devicesAddTv) {
+                    PanelValue(text: nil, style: .link)
+                }
+            }
+            .buttonStyle(.plain)
         }
     }
 

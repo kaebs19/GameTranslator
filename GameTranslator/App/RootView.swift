@@ -2,17 +2,20 @@ import SwiftUI
 
 /// Tabs, and what may open over the home screen.
 struct RootView: View {
-    private enum AppTab: Hashable { case home, tv, connect, settings }
+    private enum AppTab: Hashable { case home, devices, history, settings }
 
     private let dependencies: AppDependencies
     @State private var instant: InstantTranslateViewModel
     @State private var camera: CameraViewModel
     @State private var tv: TVViewModel
+    @State private var history: HistoryViewModel
     @Environment(\.scenePhase) private var scenePhase
     @State private var selection = AppTab.home
     @State private var sheet: HomeSheet?
     @State private var isFullScreen = false
     @State private var showsOnboarding = false
+    /// Asks My Devices to open the TV guide.
+    @State private var opensTVGuide = false
     /// Never in the way of a result someone asked for with a shortcut.
     @State private var showsSplash: Bool
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
@@ -22,6 +25,7 @@ struct RootView: View {
         _instant = State(initialValue: dependencies.makeInstantTranslateViewModel())
         _camera = State(initialValue: dependencies.makeCameraViewModel())
         _tv = State(initialValue: dependencies.makeTVViewModel())
+        _history = State(initialValue: dependencies.makeHistoryViewModel())
         _showsSplash = State(initialValue: dependencies.router.request == nil)
     }
 
@@ -42,9 +46,10 @@ struct RootView: View {
                 .interfaceLanguage(language)
         }
         .fullScreenCover(isPresented: $showsOnboarding) {
-            OnboardingView {
+            OnboardingView { setup in
                 hasSeenOnboarding = true
                 showsOnboarding = false
+                start(setup)
             }
             .interfaceLanguage(language)
         }
@@ -67,8 +72,8 @@ struct RootView: View {
 
     private static let tabItems: [AppTabBar<AppTab>.Item] = [
         .init(tab: .home, title: .homeTab, icon: "house.fill"),
-        .init(tab: .tv, title: .tvTitle, icon: "tv.fill"),
-        .init(tab: .connect, title: .connectTitle, icon: "link"),
+        .init(tab: .devices, title: .devicesTitle, icon: "tv.and.mediabox.fill"),
+        .init(tab: .history, title: .historyTitle, icon: "clock.arrow.circlepath"),
         .init(tab: .settings, title: .settingsTitle, icon: "gearshape.fill")
     ]
 
@@ -85,13 +90,17 @@ struct RootView: View {
                 )
                 .toolbar(.hidden, for: .tabBar)
             }
-            Tab(value: AppTab.tv) {
-                TVScreen(viewModel: tv, isActive: selection == .tv && !isCovered)
-                    .id(language)
-                    .toolbar(.hidden, for: .tabBar)
+            Tab(value: AppTab.devices) {
+                DevicesScreen(
+                    tv: tv, isActive: selection == .devices && !isCovered, isBroadcasting: live.isRunning,
+                    usesEnhancedTranslation: { dependencies.usesEnhancedTranslation },
+                    perform: connect, openSettings: { selection = .settings }, opensGuide: $opensTVGuide
+                )
+                .id(language)
+                .toolbar(.hidden, for: .tabBar)
             }
-            Tab(value: AppTab.connect) {
-                ConnectScreen(isBroadcasting: live.isRunning, perform: connect)
+            Tab(value: AppTab.history) {
+                HistoryScreen(viewModel: history, showsDone: false)
                     .id(language)
                     .toolbar(.hidden, for: .tabBar)
             }
@@ -119,8 +128,6 @@ struct RootView: View {
             )
         case .live:
             LiveScreen(viewModel: live)
-        case .history:
-            HistoryScreen(viewModel: dependencies.makeHistoryViewModel())
         case .controls:
             TranslationControlsSheet(
                 viewModel: dependencies.makeSettingsViewModel(), interface: dependencies.interface
@@ -148,6 +155,19 @@ struct RootView: View {
         switch action {
         case .broadcast: sheet = .live
         case .camera: selection = .home
+        }
+    }
+
+    /// Takes the user where their answer to "where do you play?" leads.
+    private func start(_ setup: PlaySetup?) {
+        switch setup {
+        case .tvOverlay:
+            selection = .devices
+            opensTVGuide = true
+        case .phoneGame:
+            sheet = .live
+        case .camera, nil:
+            selection = .home
         }
     }
 

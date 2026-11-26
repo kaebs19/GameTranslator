@@ -97,6 +97,9 @@ final class AppDependencies {
         TranslationResultViewModel(result: result, photos: photos)
     }
 
+    /// For the readiness card, which reads it when shown.
+    var usesEnhancedTranslation: Bool { settings.load().server.isEnabled }
+
     func makeTVViewModel() -> TVViewModel { TVViewModel(link: tvLink, store: settings) }
 
     func makeSettingsViewModel() -> SettingsViewModel {

@@ -38,3 +38,17 @@ struct TVGuideTests {
         #expect(guide.step == .choose && !guide.canGoBack)
     }
 }
+
+@MainActor
+struct DeviceReadinessTests {
+    @Test func tvNeedsAttentionWhenPairedButNotConnected() {
+        #expect(DeviceReadiness().tv == .off)
+        #expect(DeviceReadiness(pairedTVs: 1, connectedTVs: 0).tv == .attention)
+        #expect(DeviceReadiness(pairedTVs: 2, connectedTVs: 1).tv == .ready)
+    }
+
+    @Test func enhancedTranslationFollowsTheSetting() {
+        #expect(DeviceReadiness().enhanced == .off)
+        #expect(DeviceReadiness(usesEnhancedTranslation: true).enhanced == .ready)
+    }
+}
